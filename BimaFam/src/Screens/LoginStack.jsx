@@ -16,6 +16,8 @@ import {storeData} from '../utils/AsyncStorag';
 
 import {useLogin} from '../utils/LoginproviderContext';
 import Loading from '../loadingcomponent/loading';
+import {BASE_URL} from '../utils/constant';
+import Snackbar from 'react-native-snackbar';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -28,72 +30,90 @@ const Login = () => {
     setLoad(true);
     try {
       if (!email || !password) {
-        Alert.alert('Please enter both email and password.');
+        throw new Error('Please enter both email and password.');
         // throw new Error('wrong email or password');
-        return;
       }
 
       const requestBody = {
         email: email,
         password: password,
+        device_id: 'dasjkasbsa',
       };
 
       const response = await axios.post(
-        'https://bimaafamily.techiedom.com/lms/api_signin/auth',
+        //  'https://bimaafamily.techiedom.com/lms/api',
+        `${BASE_URL}/api/login`,
         requestBody,
       );
-      // console.log('Server response:', response);
-      //console.log('Server response:', response.data);
-      await storeData('usermail', email);
-      await storeData('userpass', password);
-      await storeData('user', JSON.stringify(response.data));
+      if (response.data.status === 200) {
+        // console.log('Server response:', response);
+        console.log('Server response:', response.data, response.data.data.id);
+        // await storeData('usermail', email);
+        // await storeData('userpass', password);
+        await storeData('user', response.data.data.id);
+        Snackbar.show({
+          text: 'Logged in Successfully.',
+          textColor: 'white',
+          backgroundColor: 'green',
+          duration: Snackbar.LENGTH_SHORT,
+          marginBottom: 70,
+        });
+        setEmail('');
+        setPassword('');
+        setIsLoggedin(true);
+      } else {
+        throw new Error('Wrong inputs');
+      }
       // navigation.navigate('Stacknav');
       // setmain(true);
-      setIsLoggedin(true);
-      setLoad(false);
-      setEmail('');
-      setPassword('');
     } catch (error) {
-      setLoad(false);
+      //setLoad(false);
+      Snackbar.show({
+        text: error.message || 'Failed to register. Please try again.',
+        textColor: 'white',
+        backgroundColor: 'red',
+        duration: Snackbar.LENGTH_SHORT,
+        marginBottom: 70,
+      });
       console.error('Error:', error.message);
-      Alert.alert('An error occurred.', error.message);
+      //Alert.alert('An error occurred.', error.message);
+    } finally {
+      setLoad(false);
     }
   };
   if (load) {
     return <Loading />;
   }
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#0e4caf'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView style={{margin: 10}} showsVerticalScrollIndicator={false}>
         <View style={{marginTop: 50}}>
           <Image
-            source={require('../assets/appicon.png')} // Update with the actual path to your back button image
+            source={require('../assets/gg.png')}
             style={{
-              width: '40%',
+              width: '100%',
               height: 150,
-              tintColor: 'white', // You can customize the color of the back button
-              marginRight: 10,
-              resizeMode: 'cover',
-              alignSelf: 'center',
+
+              //  tintColor: '#194c9e',
             }}
           />
         </View>
         <View>
-          <Text
+          {/* <Text
             style={{
               fontSize: 35,
-              color: 'white',
+              color: 'black',
               fontWeight: 'bold',
               alignSelf: 'center',
             }}>
-            Bimaa Family
-          </Text>
+            Saggio
+          </Text> */}
         </View>
         <View style={{marginTop: 30}}>
           <Text
             style={{
               fontSize: 30,
-              color: 'white',
+              color: 'black',
               alignSelf: 'center',
               fontWeight: 'bold',
             }}>
@@ -104,7 +124,7 @@ const Login = () => {
           <Text
             style={{
               fontSize: 20,
-              color: 'white',
+              color: 'black',
               alignSelf: 'center',
             }}>
             Sign in to continue.
@@ -119,27 +139,30 @@ const Login = () => {
             borderRadius: 20,
             alignSelf: 'center',
             overflow: 'hidden',
+            borderColor: 'gray',
+            borderWidth: 1,
           }}>
           <TouchableOpacity>
             <Image
-              source={require('../assets/Email.png')} // Update with the actual path to your back button image
+              source={require('../assets/E-mail.png')} // Update with the actual path to your back button image
               style={{
-                width: 40,
-                height: 40,
+                width: 26,
+                height: 26,
                 tintColor: 'black', // You can customize the color of the back button
                 //marginRight: 10,
-                //marginLeft: 10,
-                marginTop: 5,
+                marginLeft: 7,
+                marginTop: 11.5,
                 resizeMode: 'cover',
               }}
             />
           </TouchableOpacity>
           <TextInput
-            style={{flex: 1, fontSize: 17}}
+            style={{flex: 1, fontSize: 17, marginLeft: 7, color: 'black'}}
             onChangeText={setEmail}
             keyboardType="email-address"
             value={email}
             placeholder="Enter your Email"
+            placeholderTextColor={'gray'}
           />
         </View>
 
@@ -152,6 +175,8 @@ const Login = () => {
             borderRadius: 20,
             alignSelf: 'center',
             overflow: 'hidden',
+            borderColor: 'gray',
+            borderWidth: 1,
           }}>
           <TouchableOpacity onPress={() => setshowpasswrd(!showpasswrd)}>
             <Image
@@ -172,12 +197,13 @@ const Login = () => {
             />
           </TouchableOpacity>
           <TextInput
-            style={{flex: 1, fontSize: 17, marginLeft: 5}}
+            style={{flex: 1, fontSize: 17, marginLeft: 5, color: 'black'}}
             onChangeText={setPassword}
             keyboardType="default"
             value={password}
             placeholder="Enter your Password"
             secureTextEntry={!showpasswrd}
+            placeholderTextColor={'gray'}
           />
         </View>
         <TouchableOpacity
@@ -191,19 +217,21 @@ const Login = () => {
             borderRadius: 20,
             width: '80%',
             alignSelf: 'center',
+            borderColor: 'gray',
+            borderWidth: 1,
           }}>
           <Text
             style={{
               fontSize: 16,
               fontWeight: 'bold',
-              color: '#0e4caf',
+              color: 'red',
               textAlign: 'center',
             }}>
             Log In
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={{alignSelf: 'center', marginTop: 25}}>
-          <Text style={{color: 'white', textDecorationLine: 'underline'}}>
+          <Text style={{color: 'black', textDecorationLine: 'underline'}}>
             Forgot Password?
           </Text>
         </TouchableOpacity>

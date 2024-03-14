@@ -69,10 +69,10 @@ const UserProfile = () => {
               // flex: 0.5,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#0e4caf',
+              backgroundColor: 'white',
               borderRadius: 20,
             }}>
-            <Text style={{color: 'white'}}>Edit</Text>
+            <Text style={{color: 'red'}}>Edit</Text>
           </TouchableOpacity>
           <TouchableOpacity
             // onPress={() => navigation.navigate('Home')}

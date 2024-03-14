@@ -16,12 +16,12 @@ const Packages = ({navigation}) => {
     navigation.goBack();
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -32,12 +32,12 @@ const Packages = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Packages</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Packages</Text>
       </View>
       <ScrollView>
         <View style={{margin: 20, flex: 1}}>
@@ -114,7 +114,7 @@ export default Packages;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 20,
+    gap: 10,
     //justifyContent: 'center',
     // alignItems: 'center',
     //margin: 15,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    marginBottom: 5,
+    marginBottom: 0,
     //borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 10,

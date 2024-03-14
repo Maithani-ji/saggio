@@ -32,7 +32,7 @@ const Events = ({navigation}) => {
     navigation.goBack();
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       {show && (
         <DateTimePicker
           testID="datetimepicker"
@@ -47,7 +47,7 @@ const Events = ({navigation}) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -58,12 +58,12 @@ const Events = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Event Scheduled</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Event Scheduled</Text>
       </View>
       <View
         style={{
@@ -90,15 +90,15 @@ const Events = ({navigation}) => {
             <TouchableOpacity
               onPress={() => navigation.navigate('Edit Remark')}
               style={{
-                borderBlockColor: '#0e4caf',
-                borderWidth: 0.8,
+                borderColor: 'red',
+                borderWidth: 1,
 
                 borderRadius: 10,
                 paddingHorizontal: 10,
                 paddingVertical: 4,
                 marginBottom: 10,
               }}>
-              <Text style={{color: '#0e4caf'}}>+ Add Event</Text>
+              <Text style={{color: 'red'}}>+ Add Event</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -144,7 +144,7 @@ const Events = ({navigation}) => {
             }}>
             <Image
               source={require('../assets/Calender.png')}
-              style={{tintColor: '#0e4caf', width: 50, height: 50}}
+              style={{tintColor: '#104baf', width: 50, height: 50}}
             />
             <Text
               style={{
@@ -186,7 +186,7 @@ const Events = ({navigation}) => {
               }}>
               <Image
                 source={require('../assets/followup.png')}
-                style={{tintColor: '#0e4caf', width: 40, height: 40}}
+                style={{tintColor: '#104baf', width: 40, height: 40}}
               />
               <View
                 style={{
@@ -223,7 +223,7 @@ const Events = ({navigation}) => {
               }}>
               <Image
                 source={require('../assets/Customers.png')}
-                style={{tintColor: '#0e4caf', width: 40, height: 40}}
+                style={{tintColor: '#104baf', width: 35, height: 35}}
               />
               <View
                 style={{

@@ -14,7 +14,7 @@ const Incentive = ({navigation}) => {
     navigation.goBack();
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           // flexDirection: 'row',
@@ -25,7 +25,7 @@ const Incentive = ({navigation}) => {
           // height: '13%',
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -36,12 +36,12 @@ const Incentive = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Incentive</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Incentive</Text>
       </View>
       <View style={{flex: 1, margin: 20}}>
         <View
@@ -60,6 +60,7 @@ const Incentive = ({navigation}) => {
               // paddingHorizontal: 10,
               // paddingVertical: 9,
               borderRadius: 10,
+              padding: 5,
             }}>
             <Text
               style={{
@@ -89,6 +90,7 @@ const Incentive = ({navigation}) => {
               // paddingHorizontal: 10,
               // paddingVertical: 9,
               borderRadius: 10,
+              padding: 5,
             }}>
             <Text
               style={{
@@ -112,25 +114,26 @@ const Incentive = ({navigation}) => {
           <View
             style={{
               flex: 1.2,
-              backgroundColor: '#3dba45',
+              backgroundColor: 'red',
               flexDirection: 'column',
               // alignContent: 'space-around',
               //paddingHorizontal: 10,
               //paddingVertical: 9,
               borderRadius: 10,
+              padding: 5,
             }}>
             <Text
               style={{
                 textAlign: 'center',
                 fontWeight: '400',
-                color: 'black',
+                color: 'white',
                 marginVertical: 2.5,
               }}>
               Current Incentive
             </Text>
             <Text
               style={{
-                color: 'black',
+                color: 'white',
                 fontWeight: 'bold',
                 alignSelf: 'center',
                 marginVertical: 2.5,

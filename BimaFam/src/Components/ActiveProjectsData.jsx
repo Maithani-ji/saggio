@@ -2,17 +2,22 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import * as Progress from 'react-native-progress';
 import {useNavigation} from '@react-navigation/native';
+import {storeData} from '../utils/AsyncStorag';
 
 const ActiveProjects = ({index, project}) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Customers')}
-      key={index}
+      onPress={async () => {
+        //console.log(project.id);
+        await storeData('projectid', project?.id);
+        navigation.navigate('Leadsfollowup');
+      }}
+      key={project.id}
       style={{
         backgroundColor: 'white',
         marginVertical: 10,
-        padding: 15,
+        padding: 10,
         borderRadius: 10,
       }}>
       <View>
@@ -23,7 +28,7 @@ const ActiveProjects = ({index, project}) => {
             justifyContent: 'space-between',
           }}>
           <View>
-            <Text style={{fontWeight: 'bold', color: '#0e4caf'}}>
+            <Text style={{fontWeight: 'bold', color: '#3081ec'}}>
               {project?.title}
             </Text>
           </View>
@@ -66,11 +71,10 @@ const ActiveProjects = ({index, project}) => {
                 ))}
                 {project.members.length > 3 && (
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text
-                      style={{fontSize: 12, color: '#0e4caf', marginRight: 5}}>
+                    <Text style={{fontSize: 10, color: 'red', marginRight: 5}}>
                       +{project.members.length - 3}
                     </Text>
-                    <Text style={{fontSize: 12, color: '#0e4caf'}}>more</Text>
+                    <Text style={{fontSize: 10, color: 'red'}}>more</Text>
                   </View>
                 )}
               </View>
@@ -81,12 +85,13 @@ const ActiveProjects = ({index, project}) => {
                 style={{alignSelf: 'center'}}
                 progress={parseFloat(project?.progress.replace('%', '')) / 100}
                 width={110}
-                color="#0e4caf"
+                color="#3aba40"
                 height={4}
                 borderRadius={40}
+                borderColor="rgba(0,0,0,0.1)"
               />
 
-              <Text style={{marginLeft: 4, fontSize: 12}}>
+              <Text style={{marginLeft: 4, fontSize: 12, color: 'gray'}}>
                 {project?.progress}
               </Text>
             </View>
@@ -119,7 +124,7 @@ const ActiveProjects = ({index, project}) => {
           </View>
         </View>
         <View style={{marginLeft: -40}}>
-          <Text style={{fontSize: 13, alignSelf: 'center'}}>
+          <Text style={{fontSize: 12, alignSelf: 'center', color: 'gray'}}>
             Remaining Leads:{project?.remain_leads}
           </Text>
         </View>

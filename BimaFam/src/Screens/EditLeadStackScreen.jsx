@@ -98,6 +98,55 @@ const EditLead = ({navigation}) => {
     ],
     [],
   );
+  const [selectedOption, setSelectedOption] = useState('');
+  const handleRadioPress = option => {
+    setSelectedOption(option);
+  };
+  const renderRadioButton = (option, label) => {
+    return (
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          marginTop: 5,
+          alignItems: 'center', // Align items vertically in the center
+        }}
+        onPress={() => handleRadioPress(option)}>
+        <View
+          style={{
+            width: 22,
+            height: 22,
+            borderRadius: 10,
+            borderWidth: 1.5,
+            borderColor: 'black',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginRight: 10,
+          }}>
+          {selectedOption === option && (
+            <View
+              style={{
+                width: 10,
+                height: 10,
+                borderRadius: 6,
+                backgroundColor: 'black',
+              }}
+            />
+          )}
+        </View>
+        <View style={{marginRight: 5}}>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: selectedOption === option ? 'normal' : 'normal',
+              color: 'gray',
+            }}>
+            {label}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   const data = [
     {label: 'Item 1', value: '1'},
     {label: 'Item 2', value: '2'},
@@ -124,12 +173,12 @@ const EditLead = ({navigation}) => {
   ];
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -140,12 +189,12 @@ const EditLead = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Edit Lead</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Edit Lead</Text>
       </View>
       <ScrollView>
         <View
@@ -182,8 +231,8 @@ const EditLead = ({navigation}) => {
               }}>
               Type:
             </Text> */}
-            <View style={{width: '100%', marginBottom: 5}}>
-              <RadioGroup
+            {/* <View style={{width: '100%', marginBottom: 5, marginLeft: 10}}> */}
+            {/* <RadioGroup
                 radioButtons={radioButtons}
                 onPress={setSelectedId}
                 selectedId={selectedId}
@@ -193,8 +242,18 @@ const EditLead = ({navigation}) => {
                     //alignSelf: 'flex-end'
                   }
                 }
-              />
+              /> */}
+            <View
+              style={{
+                flexDirection: 'row',
+                marginLeft: 10,
+                gap: 10,
+                marginVertical: 5,
+              }}>
+              {renderRadioButton('life insurance', 'Life Insurance')}
+              {renderRadioButton('general insurance', 'General Insurance')}
             </View>
+            {/* // </View> */}
           </View>
           <View
             style={{
@@ -205,13 +264,15 @@ const EditLead = ({navigation}) => {
               paddingHorizontal: 7,
               paddingVertical: 1,
             }}>
-            <Text style={{marginHorizontal: 4}}>Plan</Text>
+            <Text style={{marginHorizontal: 4, color: 'gray'}}>Plan</Text>
             <TextInput
               style={{
                 // marginTop: -10,
                 marginVertical: -13,
+                color: 'black',
               }}
               placeholder="LIC Jeevan Amar"
+              placeholderTextColor={'gray'}
             />
           </View>
           <View style={{flexDirection: 'row'}}>
@@ -228,13 +289,15 @@ const EditLead = ({navigation}) => {
               <Text
                 style={{
                   marginHorizontal: 3,
+                  color: 'gray',
                 }}>
                 Case Code
               </Text>
 
               <TextInput
-                style={{marginVertical: -14}}
+                style={{marginVertical: -14, color: 'black'}}
                 placeholder="BMF-54721"
+                placeholderTextColor={'gray'}
               />
               {/* <Image
                   source={require('../assets/dropdown.png')} // Update with the actual path to your back button image
@@ -269,7 +332,9 @@ const EditLead = ({navigation}) => {
                 paddingHorizontal: 7,
                 paddingVertical: 1,
               }}>
-              <Text style={{marginHorizontal: 4}}>Sourcing Date</Text>
+              <Text style={{marginHorizontal: 4, color: 'gray'}}>
+                Sourcing Date
+              </Text>
               <View
                 style={{
                   flexDirection: 'row',
@@ -280,6 +345,7 @@ const EditLead = ({navigation}) => {
                   placeholder="DD-MM-YYYY"
                   value={datesourcetext}
                   editable={false}
+                  placeholderTextColor={'gray'}
                 />
               </View>
             </TouchableOpacity>
@@ -299,27 +365,32 @@ const EditLead = ({navigation}) => {
               style={{
                 flex: 1,
                 borderWidth: 1,
-                borderColor: '#0e4caf',
-                borderRadius: 5,
-                margin: 8,
-                paddingHorizontal: 7,
-                paddingVertical: 1,
-              }}>
-              <TextInput style={{marginVertical: -5}} placeholder="Name" />
-            </View>
-            <View
-              style={{
-                flex: 1,
-                borderWidth: 1,
-                borderColor: '#0e4caf',
+                borderColor: 'gray',
                 borderRadius: 5,
                 margin: 8,
                 paddingHorizontal: 7,
                 paddingVertical: 1,
               }}>
               <TextInput
-                style={{marginVertical: -5}}
+                style={{marginVertical: -5, color: 'black'}}
+                placeholder="Name"
+                placeholderTextColor={'gray'}
+              />
+            </View>
+            <View
+              style={{
+                flex: 1,
+                borderWidth: 1,
+                borderColor: 'gray',
+                borderRadius: 5,
+                margin: 8,
+                paddingHorizontal: 7,
+                paddingVertical: 1,
+              }}>
+              <TextInput
+                style={{marginVertical: -5, color: 'black'}}
                 placeholder="Contact No"
+                placeholderTextColor={'gray'}
               />
             </View>
           </View>
@@ -327,20 +398,24 @@ const EditLead = ({navigation}) => {
             style={{
               //flex: 1,
               borderWidth: 1,
-              borderColor: '#0e4caf',
+              borderColor: 'gray',
               borderRadius: 5,
               margin: 8,
               paddingHorizontal: 7,
               paddingVertical: 1,
             }}>
-            <TextInput style={{marginVertical: -5}} placeholder="Address" />
+            <TextInput
+              style={{marginVertical: -5, color: 'black'}}
+              placeholder="Address"
+              placeholderTextColor={'gray'}
+            />
           </View>
           <View style={{flexDirection: 'row'}}>
             <View
               style={{
                 flex: 1,
                 borderWidth: 1,
-                borderColor: '#0e4caf',
+                borderColor: 'gray',
                 borderRadius: 5,
                 margin: 8,
                 paddingHorizontal: 7,
@@ -374,7 +449,7 @@ const EditLead = ({navigation}) => {
               style={{
                 flex: 1,
                 borderWidth: 1,
-                borderColor: '#0e4caf',
+                borderColor: 'gray',
                 borderRadius: 5,
                 margin: 8,
                 paddingHorizontal: 7,
@@ -411,7 +486,7 @@ const EditLead = ({navigation}) => {
             style={{
               //flex: 1,
               borderWidth: 1,
-              borderColor: '#0e4caf',
+              borderColor: 'gray',
               borderRadius: 5,
               margin: 8,
               paddingHorizontal: 7,
@@ -447,7 +522,7 @@ const EditLead = ({navigation}) => {
             style={{
               //flex: 1,
               borderWidth: 1,
-              borderColor: '#0e4caf',
+              borderColor: 'gray',
               borderRadius: 5,
               margin: 8,
               paddingHorizontal: 7,
@@ -487,7 +562,7 @@ const EditLead = ({navigation}) => {
               style={{
                 flex: 1,
                 borderWidth: 1,
-                borderColor: '#0e4caf',
+                borderColor: 'gray',
                 borderRadius: 5,
                 margin: 8,
                 paddingHorizontal: 7,
@@ -518,7 +593,7 @@ const EditLead = ({navigation}) => {
               style={{
                 flex: 1,
                 borderWidth: 1,
-                borderColor: '#0e4caf',
+                borderColor: 'gray',
                 borderRadius: 5,
                 margin: 8,
                 paddingHorizontal: 7,
@@ -551,6 +626,7 @@ const EditLead = ({navigation}) => {
                   editable={false}
                   value={datefollowtext}
                   placeholder="DD-MM-YYYY"
+                  placeholderTextColor={'gray'}
                 />
                 <Image
                   source={require('../assets/Evnt.png')} // Update with the actual path to your back button image
@@ -558,7 +634,7 @@ const EditLead = ({navigation}) => {
                     // marginTop: ,
                     width: 20,
                     height: 20,
-                    tintColor: '#0e4caf',
+                    tintColor: 'gray',
                     // You can customize the color of the back button
                     marginRight: 10,
                     alignSelf: 'center',

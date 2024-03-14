@@ -14,6 +14,8 @@ import * as Progress from 'react-native-progress';
 import axios from 'axios';
 import {getData, storeData} from '../utils/AsyncStorag';
 import Loading from '../loadingcomponent/loading';
+import {BASE_URL} from '../utils/constant';
+import Snackbar from 'react-native-snackbar';
 
 const Profile = ({navigation}) => {
   const [load, setLoad] = useState(false);
@@ -29,51 +31,61 @@ const Profile = ({navigation}) => {
     navigation.goBack();
   };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoad(true);
-        const datamail = await getData('usermail');
-        const datapass = await getData('userpass');
-
-        console.log(datamail, datapass);
-        const response = await axios.get(
-          'https://bimaafamily.techiedom.com/lms/api/login',
-          {
-            email: datamail,
-            password: datapass,
-          },
-        );
-        console.log(response.data.data);
-
+    fetchData();
+  }, [fetchData]); // Empty dependency array ensures this effect runs once when component mounts
+  const fetchData = async () => {
+    try {
+      setLoad(true);
+      // const datamail = await getData('usermail');
+      // const datapass = await getData('userpass');
+      const id = await getData('user');
+      //console.log(datamail, datapass);
+      const response = await axios.post(`${BASE_URL}/api/getprofile`, {
+        user_id: id,
+      });
+      console.log(response.data);
+      if (response.data.status === 200) {
         // Assuming your API returns data in the response.data property
         const userData = response.data.data;
-        await storeData('id', userData.id);
+        // await storeData('id', userData.id);
         setEmail(userData?.email);
         setFirstName(userData?.first_name);
         setLastName(userData?.last_name);
         setContact(userData?.phone);
         setAddress(userData?.address);
         setUser(userData); // Set user state after updating other states
-        setLoad(false);
-      } catch (error) {
-        setLoad(false);
-        console.error('Error fetching data:', error);
-        // setError(error);
+        //  navigation.goBack();
+      } else {
+        navigation.goBack();
+        throw new Error('Invalid user id');
       }
-    };
-
-    fetchData();
-  }, []); // Empty dependency array ensures this effect runs once when component mounts
+      // setLoad(false);
+    } catch (error) {
+      //setLoad(false);
+      Snackbar.show({
+        text: error.message || 'Failed to get the data. Please try again.',
+        textColor: 'white',
+        backgroundColor: 'red',
+        duration: Snackbar.LENGTH_SHORT,
+        marginBottom: 70,
+      });
+      //  console.error('Error:', error.message);
+      console.error('Error fetching data:', error);
+      // setError(error);
+    } finally {
+      setLoad(false);
+    }
+  };
   if (load) {
     return <Loading />;
   }
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -84,20 +96,23 @@ const Profile = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Profile</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Profile</Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={{margin: 20}}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{marginHorizontal: 20}}>
         <View
           style={{
             flexDirection: 'row',
             backgroundColor: 'white',
             borderRadius: 10,
             padding: 10,
+            marginTop: 20,
           }}>
           <Image
             source={require('../assets/user.png')} // Update with the actual path to your back button image
@@ -171,7 +186,9 @@ const Profile = ({navigation}) => {
                 marginHorizontal: 10,
                 borderRadius: 7,
                 padding: 12,
+                color: 'black',
               }}
+              placeholderTextColor={'gray'}
               editable={true}
               value={firstName}
               onChangeText={setFirstName}
@@ -196,9 +213,11 @@ const Profile = ({navigation}) => {
                 marginHorizontal: 10,
                 borderRadius: 7,
                 padding: 12,
+                color: 'black',
               }}
               value={lastName}
               onChangeText={setLastName}
+              placeholderTextColor={'gray'}
             />
           </View>
           <View style={{marginBottom: 10}}>
@@ -220,9 +239,11 @@ const Profile = ({navigation}) => {
                 marginHorizontal: 10,
                 borderRadius: 7,
                 padding: 12,
+                color: 'black',
               }}
               value={email}
               onChangeText={setEmail}
+              placeholderTextColor={'gray'}
             />
           </View>
           <View style={{marginBottom: 10}}>
@@ -244,9 +265,11 @@ const Profile = ({navigation}) => {
                 marginHorizontal: 10,
                 borderRadius: 7,
                 padding: 12,
+                color: 'black',
               }}
               value={contact}
               onChangeText={setContact}
+              placeholderTextColor={'gray'}
             />
           </View>
           <View style={{marginBottom: 10}}>
@@ -263,13 +286,15 @@ const Profile = ({navigation}) => {
             <TextInput
               placeholder="Enter Contact"
               value={address}
-              onChangeText={setContact}
+              onChangeText={setAddress}
               style={{
                 borderWidth: 0.8,
                 marginHorizontal: 10,
                 borderRadius: 7,
                 padding: 12,
+                color: 'black',
               }}
+              placeholderTextColor={'gray'}
             />
           </View>
           <TouchableOpacity
@@ -279,7 +304,7 @@ const Profile = ({navigation}) => {
               //   height: '20%',
               //width: '35%',
               alignSelf: 'center',
-              backgroundColor: '#0e4caf',
+              backgroundColor: '#448EE4',
               borderRadius: 10,
             }}>
             <View
@@ -294,7 +319,7 @@ const Profile = ({navigation}) => {
                 style={{
                   width: 25,
                   height: 25,
-                  //tintColor: 'white', // You can customize the color of the back button
+                  tintColor: 'white', // You can customize the color of the back button
                   //marginLeft: 10,
                 }}
               />

@@ -111,8 +111,10 @@ const RemarkListData = ({index}) => {
             <Image
               source={require('../assets/Editremark.png')}
               style={{
-                width: 45,
-                height: 45,
+                width: 30,
+                height: 30,
+                marginTop: 5,
+                // tintColor: 'red',
               }}
             />
           </TouchableOpacity>

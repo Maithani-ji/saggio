@@ -59,7 +59,7 @@ const DrawerSlide = () => {
           marginTop: -10,
         },
         drawerActiveBackgroundColor: 'white',
-        drawerActiveTintColor: '#0e4caf',
+        drawerActiveTintColor: 'red',
         //drawerType: 'back',
         drawerItemStyle: {
           borderBottomWidth: 1,
@@ -77,7 +77,7 @@ const DrawerSlide = () => {
                 // marginLeft: 7,
                 marginRight: -15,
                 marginTop: -7,
-                tintColor: focused ? '#0e4caf' : 'gray',
+                tintColor: focused ? 'red' : 'gray',
                 width: 30,
                 height: 30,
               }}
@@ -97,7 +97,7 @@ const DrawerSlide = () => {
                 marginTop: -7,
                 marginRight: -15,
                 // marginLeft: 5,
-                tintColor: focused ? '#0e4caf' : 'gray',
+                tintColor: focused ? 'red' : 'gray',
                 width: 30,
                 height: 30,
               }}
@@ -117,7 +117,7 @@ const DrawerSlide = () => {
                 marginTop: -7,
                 marginRight: -15,
                 // marginLeft: 5,
-                tintColor: focused ? '#0e4caf' : 'gray',
+                tintColor: focused ? 'red' : 'gray',
                 width: 30,
                 height: 30,
               }}
@@ -137,7 +137,7 @@ const DrawerSlide = () => {
                 marginTop: -7,
                 marginRight: -15,
                 // marginLeft: 5,
-                tintColor: focused ? '#0e4caf' : 'gray',
+                tintColor: focused ? 'red' : 'gray',
                 width: 30,
                 height: 30,
               }}
@@ -157,7 +157,7 @@ const DrawerSlide = () => {
                 marginTop: -7,
                 marginRight: -15,
                 // marginLeft: 5,
-                tintColor: focused ? '#0e4caf' : 'gray',
+                tintColor: focused ? 'red' : 'gray',
                 width: 30,
                 height: 30,
               }}
@@ -178,7 +178,7 @@ const DrawerSlide = () => {
                 marginRight: -15,
                 //marginBottom: 2,
                 marginTop: -7,
-                tintColor: focused ? '#0e4caf' : 'gray',
+                tintColor: focused ? 'red' : 'gray',
                 width: 30,
                 height: 30,
               }}

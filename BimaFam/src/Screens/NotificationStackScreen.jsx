@@ -52,12 +52,12 @@ const Notifications = ({navigation}) => {
   //   setMode(currentMode);
   // };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -68,17 +68,20 @@ const Notifications = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Notifications</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Notifications</Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={{margin: 20}}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{marginHorizontal: 20}}>
         {/* <View>
           <Text>Hello</Text>
         </View>  */}
+        <View style={{marginTop: 10}}></View>
         {items.map((_, index) => (
           <View
             key={index}
@@ -92,7 +95,7 @@ const Notifications = ({navigation}) => {
               style={{
                 height: 60,
                 width: 60,
-                backgroundColor: '#0e4caf',
+                backgroundColor: 'white',
                 padding: 10,
                 borderRadius: 40,
                 marginRight: 10,
@@ -101,7 +104,7 @@ const Notifications = ({navigation}) => {
                 style={{
                   fontSize: 25,
                   fontWeight: 'bold',
-                  color: 'white',
+                  color: 'red',
                   textAlign: 'center',
                 }}>
                 NF
@@ -121,7 +124,7 @@ const Notifications = ({navigation}) => {
                 style={{
                   width: 24,
                   height: 24,
-                  tintColor: '#0e4caf',
+                  tintColor: 'black',
                   marginRight: 10,
                 }}
               />

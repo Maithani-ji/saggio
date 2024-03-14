@@ -12,6 +12,7 @@ import CustomersScreenData from '../Components/CustomersScreenData';
 import axios from 'axios';
 import {getData} from '../utils/AsyncStorag';
 import Loading from '../loadingcomponent/loading';
+import {BASE_URL} from '../utils/constant';
 
 const Customers = ({navigation}) => {
   const [load, setLoad] = useState(false);
@@ -25,20 +26,30 @@ const Customers = ({navigation}) => {
     const fetchData = async () => {
       try {
         setLoad(true); // Set loading to true before making the request
-        const datamail = await getData('usermail');
-        const datapass = await getData('userpass');
 
-        const response = await axios.get(
-          'https://bimaafamily.techiedom.com/lms/api/getProjectData',
-        );
-        console.log('response customers', response.data.data);
+        const id = await getData('user');
+
+        const response = await axios.post(`${BASE_URL}/api/getProjects`, {
+          user_id: id,
+        });
+        console.log('response customers', response.data.data[0].members);
         // Assuming your API returns data in the response.data property
-        setData(response.data.data);
-        setLoad(false); // Set loading to false after successful request
+        setData(response.data.data[0].members);
+        //  setLoad(false); // Set loading to false after successful request
       } catch (error) {
-        setLoad(false); // Set loading to false on error
-        setError(error);
+        Snackbar.show({
+          text: 'Failed to get the data. Please try again.',
+          textColor: 'white',
+          backgroundColor: 'red',
+          duration: Snackbar.LENGTH_SHORT,
+          marginBottom: 70,
+        });
+        navigation.goBack();
+        //setLoad(false); // Set loading to false on error
+        // setError(error);
         console.error('Error fetching data:', error);
+      } finally {
+        setLoad(false);
       }
     };
 
@@ -48,12 +59,12 @@ const Customers = ({navigation}) => {
     return <Loading />;
   }
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -64,12 +75,12 @@ const Customers = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Customers</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Customers</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View

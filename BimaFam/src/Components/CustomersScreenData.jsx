@@ -79,8 +79,14 @@ const CustomersScreenData = ({index, item}) => {
           }}
         />
         <View style={{flex: 1, flexDirection: 'column', marginLeft: 5}}>
-          <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>
-            {item?.name}
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 'bold',
+              color: 'black',
+              marginLeft: 4,
+            }}>
+            {item?.first_name}
           </Text>
           <View
             style={{
@@ -103,7 +109,7 @@ const CustomersScreenData = ({index, item}) => {
             </View>
             <View style={{flexDirection: 'row'}}>
               <Image
-                source={require('../assets/Email.png')}
+                source={require('../assets/mail.png')}
                 style={{height: 20, width: 20}}
               />
               <Text
@@ -139,7 +145,7 @@ const CustomersScreenData = ({index, item}) => {
         style={{
           flex: 1,
           flexDirection: 'row',
-          gap: -10,
+          gap: -2,
           marginTop: -4,
           justifyContent: 'flex-end',
         }}>
@@ -156,8 +162,9 @@ const CustomersScreenData = ({index, item}) => {
           <Image
             source={require('../assets/move.png')}
             style={{
-              width: 45,
-              height: 45,
+              width: 30,
+              height: 30,
+              marginTop: 7,
             }}
           />
         </TouchableOpacity>

@@ -15,6 +15,9 @@ import Notifications from '../Screens/NotificationStackScreen';
 import PackagedetailStk from '../Screens/PackagedetailStk';
 
 import {getData} from '../utils/AsyncStorag';
+import CalculatorStk from '../Screens/CalculatorStk';
+import Calculator from '../Screens/CalculatorStk';
+import Leadsfollowup from '../Screens/Leadsfollowup';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,11 +79,16 @@ const Stacknav = () => {
         component={PackagedetailStk}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="Authnav"
-        component={Authnav}
+      <Stack.Screen
+        name="Calculator"
+        component={Calculator}
         options={{headerShown: false}}
-      /> */}
+      />
+      <Stack.Screen
+        name="Leadsfollowup"
+        component={Leadsfollowup}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };

@@ -27,10 +27,18 @@ const HomesixBtns = () => {
           {/* <View style={styles.box}> */}
           <Image
             source={require('../assets/Customers.png')}
-            style={{marginTop: 10, height: 70, width: 70, tintColor: '#194c9e'}}
+            style={{marginTop: 10, height: 60, width: 60, tintColor: 'gray'}}
             resizeMode="cover"
           />
-          <Text style={{color: 'gray', marginVertical: 5}}>Customers</Text>
+          <Text
+            style={{
+              color: 'gray',
+              marginVertical: 5,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}>
+            Customers
+          </Text>
           {/* </View> */}
         </TouchableOpacity>
         <TouchableOpacity
@@ -39,10 +47,18 @@ const HomesixBtns = () => {
           {/* <View style={styles.box}> */}
           <Image
             source={require('../assets/Leads.png')}
-            style={{marginTop: 10, height: 70, width: 70, tintColor: '#194c9e'}}
+            style={{marginTop: 10, height: 60, width: 60, tintColor: 'gray'}}
             resizeMode="cover"
           />
-          <Text style={{color: 'gray', marginVertical: 5}}>Leads</Text>
+          <Text
+            style={{
+              color: 'gray',
+              marginVertical: 5,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}>
+            Leads
+          </Text>
           {/* </View> */}
         </TouchableOpacity>
         <TouchableOpacity
@@ -51,10 +67,18 @@ const HomesixBtns = () => {
           {/* <View style={styles.box}> */}
           <Image
             source={require('../assets/Pacakages.png')}
-            style={{marginTop: 10, height: 70, width: 70, tintColor: '#194c9e'}}
+            style={{marginTop: 10, height: 60, width: 60, tintColor: 'gray'}}
             resizeMode="cover"
           />
-          <Text style={{color: 'gray', marginVertical: 5}}>Packages</Text>
+          <Text
+            style={{
+              color: 'gray',
+              marginVertical: 5,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}>
+            Packages
+          </Text>
           {/* </View> */}
         </TouchableOpacity>
       </View>
@@ -72,10 +96,18 @@ const HomesixBtns = () => {
           {/* <View style={styles.box}> */}
           <Image
             source={require('../assets/Evnt.png')}
-            style={{marginTop: 10, height: 70, width: 70, tintColor: '#194c9e'}}
+            style={{marginTop: 10, height: 60, width: 60, tintColor: 'gray'}}
             resizeMode="cover"
           />
-          <Text style={{color: 'gray', marginVertical: 5}}>Events</Text>
+          <Text
+            style={{
+              color: 'gray',
+              marginVertical: 5,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}>
+            Events
+          </Text>
           {/* </View> */}
         </TouchableOpacity>
         <TouchableOpacity
@@ -84,22 +116,38 @@ const HomesixBtns = () => {
           {/* <View style={styles.box}> */}
           <Image
             source={require('../assets/Incentive.png')}
-            style={{marginTop: 10, height: 70, width: 70, tintColor: '#194c9e'}}
+            style={{marginTop: 10, height: 60, width: 60, tintColor: 'gray'}}
             resizeMode="cover"
           />
-          <Text style={{color: 'gray', marginVertical: 5}}>Incentives</Text>
+          <Text
+            style={{
+              color: 'gray',
+              marginVertical: 5,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}>
+            Incentives
+          </Text>
           {/* </View> */}
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.box}
-          onPress={() => navigation.navigate('Profile')}>
+          onPress={() => navigation.navigate('Calculator')}>
           {/* <View style={styles.box}> */}
           <Image
-            source={require('../assets/Profile.png')}
-            style={{marginTop: 10, height: 70, width: 70, tintColor: '#194c9e'}}
+            source={require('../assets/Calculator.png')}
+            style={{marginTop: 10, height: 60, width: 60, tintColor: 'gray'}}
             resizeMode="cover"
           />
-          <Text style={{color: 'gray', marginVertical: 5}}>Profile</Text>
+          <Text
+            style={{
+              color: 'gray',
+              marginVertical: 5,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}>
+            Calculator
+          </Text>
           {/* </View> */}
         </TouchableOpacity>
       </View>

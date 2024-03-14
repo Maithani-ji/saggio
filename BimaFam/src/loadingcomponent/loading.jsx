@@ -34,7 +34,7 @@ const Loading = ({color}) => {
             alignItems: 'center',
           }}>
           <View>
-            <ActivityIndicator size={60} color={'#0e4caf'} />
+            <ActivityIndicator size={60} color={'red'} />
           </View>
         </View>
       )}

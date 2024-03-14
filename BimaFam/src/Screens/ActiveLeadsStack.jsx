@@ -67,7 +67,7 @@ const ActiveLeads = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       {show && (
         <DateTimePicker
           value={date}
@@ -92,7 +92,7 @@ const ActiveLeads = ({navigation}) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -103,12 +103,12 @@ const ActiveLeads = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Active Leads</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Active Leads</Text>
       </View>
 
       <View
@@ -122,7 +122,11 @@ const ActiveLeads = ({navigation}) => {
         }}>
         {/* Text Input Box 4 */}
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} placeholder="Search" />
+          <TextInput
+            style={styles.input}
+            placeholder="Search"
+            placeholderTextColor={'gray'}
+          />
 
           <TouchableOpacity>
             <Image
@@ -148,6 +152,7 @@ const ActiveLeads = ({navigation}) => {
             placeholder="From"
             editable={false}
             value={datefromtext}
+            placeholderTextColor={'gray'}
           />
 
           <TouchableOpacity onPress={() => showMode('date')}>
@@ -165,6 +170,7 @@ const ActiveLeads = ({navigation}) => {
             placeholder="To"
             editable={false}
             value={datetotext}
+            placeholderTextColor={'gray'}
           />
 
           <TouchableOpacity onPress={() => showMode1('date')}>
@@ -181,7 +187,7 @@ const ActiveLeads = ({navigation}) => {
               marginHorizontal: 10,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#0e4caf',
+              backgroundColor: 'red',
 
               alignItems: 'center',
 
@@ -221,9 +227,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 0.5,
-    borderColor: '#0e4caf',
+    borderColor: 'gray',
     borderRadius: 10,
-    //padding: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
     //marginTop: 7,
     flex: 1,
     backgroundColor: 'white',

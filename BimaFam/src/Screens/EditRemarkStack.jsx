@@ -11,17 +11,83 @@ import {
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Snackbar from 'react-native-snackbar';
+import {getData} from '../utils/AsyncStorag';
+import axios from 'axios';
+import {BASE_URL} from '../utils/constant';
+import Loading from '../loadingcomponent/loading';
 
 const EditRemark = ({navigation}) => {
   const [followbtn, setfollowbtn] = useState(false);
   const [meetingbtn, setmeetingbtn] = useState(false);
-
+  const [load, setLoad] = useState(false);
   const [date, setdate] = useState(new Date());
   const [mode, setmode] = useState('');
   const [show, setshow] = useState(false);
   const [datetext, setdatetext] = useState('DD-MM-YYYY');
   const [timetext, settimetext] = useState('HH:MM');
+  const [reminder, setreminder] = useState(null);
+  const [remark, setRemark] = useState(null);
+  const [eventtype, seteventtype] = useState(null);
+  const handleAddevent = async () => {
+    try {
+      setLoad(true);
+      // const datamail = await getData('usermail');
+      // const datapass = await getData('userpass');
+      if (
+        eventtype == null ||
+        datetext == 'DD-MM-YYYY' ||
+        timetext == 'HH:MM' ||
+        remark == null ||
+        reminder == null
+      ) {
+        throw new Error('Please fill  all the  required fields ');
+      }
+      const id = await getData('user');
+      const projectid = await getData('projectid');
+      console.log('projectid', projectid);
+      const body = {
+        user_id: id,
+        event_type: eventtype,
+        date: datetext,
+        time: timetext,
+        remark: remark,
+        reminder: reminder,
+      };
+      console.log('body', body);
+      const response = await axios.post(`${BASE_URL}/api/addEvent`, body);
+      console.log('fetch data', response.data);
+      if (response.data.status === 200) {
+        Snackbar.show({
+          text: 'Event Added Successfully',
+          textColor: 'white',
+          backgroundColor: '#3aba40',
+          duration: Snackbar.LENGTH_SHORT,
+          // marginBottom: 70,
+        });
 
+        navigation.goBack();
+      } else {
+        //navigation.goBack();
+        throw new Error('Invalid user  during Event');
+      }
+    } catch (error) {
+      //setLoad(false);
+      // navigation.goBack();
+      Snackbar.show({
+        text: error.message || 'Failed to add the data. Please try again.',
+        textColor: 'white',
+        backgroundColor: 'red',
+        duration: Snackbar.LENGTH_SHORT,
+        // marginBottom: 70,
+      });
+      //  console.error('Error:', error.message);
+      //  console.error('Error fetching data:', error);
+      // setError(error);
+    } finally {
+      setLoad(false);
+    }
+  };
   const onchange = (event, selectedDate) => {
     setshow(false);
     const currentDate = selectedDate || date;
@@ -43,21 +109,28 @@ const EditRemark = ({navigation}) => {
   };
   const handlefollowbtnpress = () => {
     setfollowbtn(!followbtn);
+    seteventtype('followup');
+    setmeetingbtn(false);
   };
   const handlemeetingbtnpress = () => {
     setmeetingbtn(!meetingbtn);
+    seteventtype('meeting');
+    setfollowbtn(false);
   };
   const handleBackPress = () => {
     // Handle back button press (e.g., navigate back)
     navigation.goBack();
   };
+  if (load) {
+    return <Loading />;
+  }
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -68,12 +141,12 @@ const EditRemark = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: 'black', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Add Event</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Add Event</Text>
       </View>
       <View style={{margin: 15, flex: 1}}>
         <View
@@ -108,7 +181,9 @@ const EditRemark = ({navigation}) => {
                 iconStyle={{borderColor: 'green'}}
                 innerIconStyle={{borderWidth: 2, borderRadius: 1}}
                 textStyle={{fontFamily: 'JosefinSans-Regular'}}
-                onPress={isChecked => {}}
+                onPress={isChecked => {
+                  isChecked ? setreminder('1') : setreminder('0');
+                }}
               />
             </View>
             <View
@@ -122,7 +197,7 @@ const EditRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   backgroundColor: followbtn ? 'lightgray' : null,
                   borderWidth: 0.8,
                   borderRadius: 7,
@@ -146,7 +221,7 @@ const EditRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -156,7 +231,7 @@ const EditRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   backgroundColor: meetingbtn ? 'lightgray' : null,
                   borderWidth: 0.8,
                   borderRadius: 7,
@@ -180,7 +255,7 @@ const EditRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -198,7 +273,7 @@ const EditRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   borderWidth: 0.8,
                   borderRadius: 7,
                   flexDirection: 'row',
@@ -221,7 +296,7 @@ const EditRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -241,7 +316,7 @@ const EditRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   borderWidth: 0.8,
                   borderRadius: 7,
                   flexDirection: 'row',
@@ -265,7 +340,7 @@ const EditRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -305,6 +380,8 @@ const EditRemark = ({navigation}) => {
               textAlignVertical="top"
               placeholder="Note Here"
               placeholderTextColor="#A9A9A9" // You can customize the placeholder text color
+              value={remark}
+              onChangeText={setRemark}
             />
           </View>
         </View>
@@ -316,14 +393,14 @@ const EditRemark = ({navigation}) => {
             //width: '30%',
           }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Events')}
+            onPress={handleAddevent}
             style={{
               //marginVertical: 10,
               // flex: 1,
               // height: '70%',
               // width: '35%',
 
-              backgroundColor: '#0e4caf',
+              backgroundColor: 'red',
               borderRadius: 10,
               padding: 13,
               paddingHorizontal: 40,

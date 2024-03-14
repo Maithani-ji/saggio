@@ -74,7 +74,7 @@ const ActiveLeadsData = ({index}) => {
               </View>
               <View style={{flexDirection: 'row'}}>
                 <Image
-                  source={require('../assets/Email.png')}
+                  source={require('../assets/mail.png')}
                   style={{height: 20, width: 20}}
                 />
                 <Text
@@ -138,9 +138,9 @@ const ActiveLeadsData = ({index}) => {
             <View
               style={{
                 borderWidth: 1,
-                borderColor: '#0e4caf',
+                borderColor: 'red',
                 borderRadius: 400,
-                backgroundColor: '#0e4caf',
+                backgroundColor: 'red',
                 padding: 5,
               }}>
               <Image

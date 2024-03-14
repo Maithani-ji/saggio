@@ -16,7 +16,7 @@ const CustomDrawerButton = () => {
         style={{
           height: 40,
           width: 40,
-          tintColor: 'white',
+          tintColor: 'black',
           margin: 10,
         }}
       />

@@ -12,6 +12,10 @@ import {
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import axios from 'axios';
+import Snackbar from 'react-native-snackbar';
+import Loading from '../loadingcomponent/loading';
+import {getData} from '../utils/AsyncStorag';
 const AddRemark = ({navigation}) => {
   const [followbtn, setfollowbtn] = useState(false);
   const [meetingbtn, setmeetingbtn] = useState(false);
@@ -50,13 +54,14 @@ const AddRemark = ({navigation}) => {
     // Handle back button press (e.g., navigate back)
     navigation.goBack();
   };
+
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
           paddingVertical: 10,
           padding: 20,
           height: '10%',
@@ -67,12 +72,12 @@ const AddRemark = ({navigation}) => {
             style={{
               width: 24,
               height: 24,
-              tintColor: 'white', // You can customize the color of the back button
+              tintColor: '#104baf', // You can customize the color of the back button
               marginRight: 10,
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'white'}}>Add Remark</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Add Remark</Text>
       </View>
       <View></View>
       <View style={{margin: 15, flex: 1}}>
@@ -155,7 +160,7 @@ const AddRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   backgroundColor: followbtn ? 'lightgray' : null,
                   borderWidth: 0.8,
                   borderRadius: 7,
@@ -179,7 +184,7 @@ const AddRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -189,7 +194,7 @@ const AddRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   backgroundColor: meetingbtn ? 'lightgray' : null,
                   borderWidth: 0.8,
                   borderRadius: 7,
@@ -213,7 +218,7 @@ const AddRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -231,7 +236,7 @@ const AddRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   borderWidth: 0.8,
                   borderRadius: 7,
                   flexDirection: 'row',
@@ -254,7 +259,7 @@ const AddRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -274,7 +279,7 @@ const AddRemark = ({navigation}) => {
                 style={{
                   width: '48%',
                   //height: 20,
-                  borderColor: '#0e4caf',
+                  borderColor: 'gray',
                   borderWidth: 0.8,
                   borderRadius: 7,
                   flexDirection: 'row',
@@ -298,7 +303,7 @@ const AddRemark = ({navigation}) => {
                   style={{
                     width: 23,
                     height: 23,
-                    tintColor: '#0e4caf', // You can customize the color of the back button
+                    tintColor: '#104baf', // You can customize the color of the back button
                     marginRight: 10,
                   }}
                 />
@@ -322,7 +327,7 @@ const AddRemark = ({navigation}) => {
               // height: '70%',
               // width: '35%',
 
-              backgroundColor: '#0e4caf',
+              backgroundColor: 'red',
               borderRadius: 10,
               padding: 13,
               paddingHorizontal: 40,

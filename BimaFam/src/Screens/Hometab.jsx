@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   ImageBackground,
   Image,
@@ -20,62 +20,128 @@ import ActiveProjects from '../Components/ActiveProjectsData';
 import {getData} from '../utils/AsyncStorag';
 import Loading from '../loadingcomponent/loading';
 import axios from 'axios';
+import {BASE_URL} from '../utils/constant';
+import {useFocusEffect} from '@react-navigation/native';
+import Snackbar from 'react-native-snackbar';
 
 const Home = () => {
   const [data, setData] = useState(null);
   const [load, setLoad] = useState(false);
   const [projectdata, setProjectdata] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     fetchDashboardData();
+  //     fetchActiveprojectData();
+  //   }, [fetchDashboardData, fetchActiveprojectData]),
+  // ); // Dependency ar
+  // useEffect(() => {
+  //   fetchDashboardData();
+  //   fetchActiveprojectData();
+  // }, []);
+  const fetchDashboardData = useMemo(
+    () => async () => {
       try {
         setLoad(true);
-        const id = await getData('id');
+        const id = await getData('user');
         console.log(id);
 
-        const response = await axios.get(
-          'https://bimaafamily.techiedom.com/lms/api/getDashboard',
-          {user_id: 1},
-        );
-
-        // Assuming your API returns data in the response.data property
-        //console.log(response.data.data);
-        setData(response.data.data);
-        const projectresponse = await axios.get(
-          'https://bimaafamily.techiedom.com/lms/api/getProjects',
-          {user_id: 1},
-        );
-        console.log('member', projectresponse.data.data[0].members);
-        setProjectdata(projectresponse.data.data);
-        setLoad(false);
+        const response = await axios.post(`${BASE_URL}/api/getDashboard`, {
+          user_id: id,
+        });
+        if (response.data.status === 200) {
+          console.log(response.data.data);
+          setData(response.data.data);
+        } else {
+          throw new Error('Invalid response from dashboard');
+        }
       } catch (error) {
-        setLoad(false);
+        Snackbar.show({
+          text: error.message || 'Failed to get the data. Please try again.',
+          textColor: 'white',
+          backgroundColor: 'red',
+          duration: Snackbar.LENGTH_SHORT,
+          marginBottom: 70,
+        });
         console.log('Error in Homepage', error);
+      } finally {
+        setLoad(false);
       }
-    };
+    },
+    [],
+  );
+  const fetchActiveprojectData = useMemo(
+    () => async () => {
+      try {
+        setLoad(true);
+        const id = await getData('user');
+        console.log(id);
 
-    fetchData();
-  }, []); // Dependency ar
+        const response = await axios.post(`${BASE_URL}/api/getProjects`, {
+          user_id: id,
+        });
+        console.log('member', response.data);
+        if (response.data.status === 200) {
+          setProjectdata(response.data.data);
+        } else {
+          throw new Error('Invalid response from Active project');
+        }
+      } catch (error) {
+        Snackbar.show({
+          text: error.message || 'Failed to get the data. Please try again.',
+          textColor: 'white',
+          backgroundColor: 'red',
+          duration: Snackbar.LENGTH_SHORT,
+          marginBottom: 70,
+        });
+        console.log('Error in Homepage', error);
+      } finally {
+        setLoad(false);
+      }
+    },
+    [],
+  );
+  const memoizedFetchDashboardData = useMemo(() => fetchDashboardData, []);
+  const memoizedFetchActiveprojectData = useMemo(
+    () => fetchActiveprojectData,
+    [],
+  );
+  useFocusEffect(
+    React.useCallback(() => {
+      memoizedFetchDashboardData();
+      memoizedFetchActiveprojectData();
+    }, [memoizedFetchDashboardData, memoizedFetchActiveprojectData]),
+  ); // Dependency ar
+  // useEffect(() => {
+  //   memoizedFetchDashboardData();
+  //   memoizedFetchActiveprojectData();
+  // }, [memoizedFetchDashboardData, memoizedFetchActiveprojectData]);
+
   if (load) {
     return <Loading />;
   }
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#dee7f8'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       {/* STARTING OF Homepage above logo and  drwaer button and notification */}
-      <ImageBackground
-        source={require('../assets/topimage.png')}
-        style={{
-          width: '100%',
-          height: 140,
-          tintColor: '#194c9e',
-        }}
-        resizeMode="cover">
-        <View style={{position: 'absolute', top: 10, left: 10}}>
-          <CustomDrawerButton />
-        </View>
-        <View style={{position: 'absolute', top: 10, right: 10, zIndex: 1}}>
-          <NotificationBtn />
-        </View>
-      </ImageBackground>
+      <View>
+        <Image
+          source={require('../assets/bcg.png')}
+          style={{
+            width: '100%',
+            height: 180,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
+            //  tintColor: '#194c9e',
+          }}
+          //   resizeMode="cover"
+        />
+      </View>
+      <View style={{position: 'absolute', top: 10, left: 10}}>
+        <CustomDrawerButton />
+      </View>
+      <View style={{position: 'absolute', top: 10, right: 10, zIndex: 1}}>
+        <NotificationBtn />
+      </View>
+      {/* </ImageBackground> */}
       {/* Ending OF Homepage above logo and  drwaer button and notification */}
 
       <ScrollView>
@@ -108,7 +174,7 @@ const Home = () => {
                 source={require('../assets/TodaySale.png')}
                 style={{
                   width: '40%',
-                  height: 90,
+                  height: 80,
                   marginHorizontal: -5,
                   tintColor: 'white',
                 }}
@@ -120,10 +186,10 @@ const Home = () => {
                   alignItems: 'flex-end',
                   marginRight: 10,
                 }}>
-                <Text style={{color: 'white'}}>Today Sale</Text>
+                <Text style={{color: 'white'}}>Monthly Sale</Text>
                 <Text
                   style={{fontWeight: 'bold', color: 'white', fontSize: 17}}>
-                  ₹{data?.today_sale}
+                  ₹{data?.monthly_sale}
                 </Text>
               </View>
               {/* </View> */}
@@ -143,7 +209,7 @@ const Home = () => {
                 source={require('../assets/TotalSale.png')}
                 style={{
                   width: '40%',
-                  height: 90,
+                  height: 80,
 
                   tintColor: 'white',
                 }}
@@ -165,7 +231,7 @@ const Home = () => {
             </LinearGradient>
           </View>
           <LinearGradient
-            colors={['#36D1DC', '#5B86E5']}
+            colors={['#36D1DC', '#3790ee']}
             start={{x: 0, y: 0}} // Horizontal start
             end={{x: 1, y: 0}} // Horizontal end
             style={{
@@ -191,7 +257,7 @@ const Home = () => {
                 source={require('../assets/TodayLead.png')}
                 style={{
                   width: '40%',
-                  height: 90,
+                  height: 80,
                   tintColor: 'white',
                 }}
                 resizeMode="cover"
@@ -202,10 +268,10 @@ const Home = () => {
                   alignItems: 'flex-end',
                   marginRight: 10,
                 }}>
-                <Text style={{color: 'white'}}>Today Lead</Text>
+                <Text style={{color: 'white'}}>Monthly Lead</Text>
                 <Text
                   style={{fontWeight: 'bold', color: 'white', fontSize: 17}}>
-                  {data?.today_lead}
+                  {data?.monthly_lead}
                 </Text>
               </View>
             </View>
@@ -228,7 +294,7 @@ const Home = () => {
                 source={require('../assets/TotalLead.png')}
                 style={{
                   width: '40%',
-                  height: 90,
+                  height: 80,
                   tintColor: 'white',
                 }}
                 resizeMode="cover"

@@ -15,19 +15,20 @@ const Tabnav = () => {
         tabBarStyle: {
           height: '9%',
           width: '100%',
-          backgroundColor: '#0e4caf',
+          backgroundColor: 'white',
         },
+        // tabBarLabel:{false}
       }}>
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: '',
           tabBarLabelStyle: {
             color: 'white',
             fontWeight: 'bold',
             fontSize: 11,
-            marginBottom: 15,
+            marginBottom: 0,
             fontFamily: 'Arial',
           },
           headerShown: false,
@@ -35,12 +36,16 @@ const Tabnav = () => {
             <View style={{marginBottom: 0}}>
               <Image
                 // source={Evnt} // Update the file extension if needed
-                source={require('../assets/Home.png')}
+                source={
+                  !focused
+                    ? require('../assets/Home.png')
+                    : require('../assets/homes.png')
+                }
                 style={{
-                  height: 35,
-                  width: 35,
+                  height: focused ? 29 : 32,
+                  width: focused ? 29 : 32,
 
-                  tintColor: focused ? '#9e9e9e' : 'white', // Set the color to white
+                  tintColor: focused ? 'red' : 'gray', // Set the color to white
                 }} // Adjust the height and width as needed
               />
             </View>
@@ -51,12 +56,12 @@ const Tabnav = () => {
         name="Packages"
         component={Packages}
         options={{
-          tabBarLabel: 'Packages',
+          tabBarLabel: '',
           tabBarLabelStyle: {
             color: 'white',
             fontWeight: 'bold',
             fontSize: 11,
-            marginBottom: 15,
+            marginBottom: 0,
             fontFamily: 'Arial',
           },
           headerShown: false,
@@ -69,7 +74,7 @@ const Tabnav = () => {
                   height: 35,
                   width: 35,
 
-                  tintColor: focused ? '#9e9e9e' : 'white', // Set the color to white
+                  tintColor: focused ? 'red' : 'gray', // Set the color to white
                 }} // Adjust the height and width as needed
               />
             </View>
@@ -80,24 +85,24 @@ const Tabnav = () => {
         name="Customers"
         component={Customers}
         options={{
-          tabBarLabel: 'Customers',
+          tabBarLabel: '',
           tabBarLabelStyle: {
             color: 'white',
             fontWeight: 'bold',
             fontSize: 11,
-            marginBottom: 15,
+            marginBottom: 0,
             fontFamily: 'Arial',
           },
           headerShown: false,
           tabBarIcon: ({focused}) => (
-            <View style={{marginBottom: 0}}>
+            <View style={{marginBottom: -3}}>
               <Image
                 // source={Evnt} // Update the file extension if needed
                 source={require('../assets/customerss.png')}
                 style={{
                   height: 35,
                   width: 35,
-                  tintColor: focused ? '#9e9e9e' : 'white', // Set the color to white
+                  tintColor: focused ? 'red' : 'gray', // Set the color to white
                 }} // Adjust the height and width as needed
               />
             </View>
@@ -109,12 +114,12 @@ const Tabnav = () => {
         name="Events"
         component={Events}
         options={{
-          tabBarLabel: 'Events',
+          tabBarLabel: '',
           tabBarLabelStyle: {
             color: 'white',
             fontWeight: 'bold',
             fontSize: 11,
-            marginBottom: 15,
+            marginBottom: 0,
             fontFamily: 'Arial',
           },
           headerShown: false,
@@ -127,7 +132,7 @@ const Tabnav = () => {
                   height: 28,
                   width: 28,
 
-                  tintColor: focused ? '#9e9e9e' : 'white', // Set the color to white
+                  tintColor: focused ? 'red' : 'gray', // Set the color to white
                 }} // Adjust the height and width as needed
               />
             </View>
