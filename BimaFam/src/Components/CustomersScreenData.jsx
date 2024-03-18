@@ -46,7 +46,7 @@ const CustomersScreenData = ({index, item}) => {
     <View
       key={index}
       style={{
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         flex: 1,
         flexDirection: 'row',
         // marginHorizontal: 15,
@@ -135,7 +135,13 @@ const CustomersScreenData = ({index, item}) => {
                   color: 'gray',
                   textAlignVertical: 'center',
                 }}>
-                abcd gurgaon sector 5
+                {item?.city +
+                  ' ' +
+                  item?.state +
+                  ' ' +
+                  item?.zip +
+                  ' ' +
+                  item?.country}
               </Text>
             </View>
           </View>
@@ -143,9 +149,9 @@ const CustomersScreenData = ({index, item}) => {
       </View>
       <View
         style={{
-          flex: 1,
+          // flex: 1,
           flexDirection: 'row',
-          gap: -2,
+          gap: -8,
           marginTop: -4,
           justifyContent: 'flex-end',
         }}>
@@ -158,7 +164,7 @@ const CustomersScreenData = ({index, item}) => {
             }}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handlealert}>
+        {/* <TouchableOpacity onPress={handlealert}>
           <Image
             source={require('../assets/move.png')}
             style={{
@@ -167,8 +173,8 @@ const CustomersScreenData = ({index, item}) => {
               marginTop: 7,
             }}
           />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Edit Lead')}>
+        </TouchableOpacity> */}
+        <TouchableOpacity onPress={() => navigation.navigate('Customerdetail')}>
           <Image
             source={require('../assets/cedit.png')}
             style={{

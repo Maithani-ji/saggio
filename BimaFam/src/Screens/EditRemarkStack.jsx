@@ -38,8 +38,8 @@ const EditRemark = ({navigation}) => {
         eventtype == null ||
         datetext == 'DD-MM-YYYY' ||
         timetext == 'HH:MM' ||
-        remark == null ||
-        reminder == null
+        remark == null
+        //  reminder == null
       ) {
         throw new Error('Please fill  all the  required fields ');
       }
@@ -52,7 +52,7 @@ const EditRemark = ({navigation}) => {
         date: datetext,
         time: timetext,
         remark: remark,
-        reminder: reminder,
+        reminder: '1',
       };
       console.log('body', body);
       const response = await axios.post(`${BASE_URL}/api/addEvent`, body);
@@ -173,7 +173,7 @@ const EditRemark = ({navigation}) => {
                 }}>
                 Add Reminder
               </Text>
-              <BouncyCheckbox
+              {/* <BouncyCheckbox
                 size={15}
                 fillColor="green"
                 unfillColor="#FFFFFF"
@@ -183,8 +183,8 @@ const EditRemark = ({navigation}) => {
                 textStyle={{fontFamily: 'JosefinSans-Regular'}}
                 onPress={isChecked => {
                   isChecked ? setreminder('1') : setreminder('0');
-                }}
-              />
+                }} 
+              />*/}
             </View>
             <View
               style={{

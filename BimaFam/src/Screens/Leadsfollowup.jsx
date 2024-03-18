@@ -19,6 +19,7 @@ import {getData} from '../utils/AsyncStorag';
 import Loading from '../loadingcomponent/loading';
 import {BASE_URL} from '../utils/constant';
 import Timer from '../Components/Timer';
+import LinearGradient from 'react-native-linear-gradient';
 const Leadsdata = ({navigation}) => {
   const [insurer, setinsurer] = useState([]);
   const [paymentmode, setpaymentmode] = useState([]);
@@ -490,28 +491,9 @@ const Leadsdata = ({navigation}) => {
               }}
             />
           </TouchableOpacity>
-          <Text style={{fontSize: 17, color: 'black'}}>Leads Data</Text>
+          <Text style={{fontSize: 17, color: 'black'}}>Lead</Text>
         </View>
         <View style={{flexDirection: 'row', gap: 10}}>
-          {/* <TouchableOpacity
-            style={{
-              backgroundColor: 'orange',
-              paddingHorizontal: 5,
-              paddingVertical: 2.5,
-              flexDirection: 'row',
-              borderRadius: 7,
-            }}>
-            <Image
-              source={require('../assets/backicon.png')} // Update with the actual path to your back button image
-              style={{
-                width: 17,
-                height: 17,
-                tintColor: 'white', // You can customize the color of the back button
-                marginRight: 5,
-              }}
-            />
-            <Text style={{fontSize: 12.5, color: 'white'}}>Previous Lead</Text>
-          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={fetchData}
             style={{
@@ -537,281 +519,389 @@ const Leadsdata = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          flex: 1,
-          marginVertical: 10,
-          marginHorizontal: 10,
-          backgroundColor: 'white',
-          //padding: 10,
-          borderRadius: 10,
-        }}>
-        <View
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <LinearGradient
+          colors={['#3790ee', '#36D1DC']}
+          start={{x: 0, y: 0}} // Horizontal start
+          end={{x: 1, y: 0}} // Horizontal end
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 10,
+            //padding: 2,
+            flex: 1,
+            //flexDirection: 'row',
+            marginVertical: 20,
+            marginHorizontal: 10,
+            borderRadius: 10,
+            paddingHorizontal: 15,
+            //justifyContent: 'center',
+            paddingVertical: 10,
+            borderRadius: 10,
           }}>
-          <Timer />
-          <TouchableOpacity
-            onPress={openModal}
-            style={{
-              backgroundColor: '#3081ec',
-              paddingHorizontal: 5,
-              paddingVertical: 3,
-              flexDirection: 'row',
-              borderRadius: 7,
-              marginRight: 5,
-              marginTop: 5,
-            }}>
-            <Image
-              source={require('../assets/lead-follow.png')} // Update with the actual path to your back button image
-              style={{
-                width: 15,
-                height: 15,
-                tintColor: 'white', // You can customize the color of the back button
-                marginRight: 5,
-                marginTop: 2,
-              }}
-            />
-            <Text style={{fontSize: 13, color: 'white'}}>Lead Follow Up</Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            width: '100%',
-            height: 0.8,
-            backgroundColor: 'lightgray',
-            marginVertical: 10,
-          }}></View>
-        <View style={{padding: 10}}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{marginBottom: 10, marginLeft: 2}}>
             <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity
-              // onPress={handleBackPress}
-              >
-                <Image
-                  source={require('../assets/dropdown.png')} // Update with the actual path to your back button image
-                  style={{
-                    width: 22,
-                    height: 22,
-                    tintColor: 'white', // You can customize the color of the back button
-                    marginRight: 10,
-                    marginTop: 1,
-                  }}
-                />
-              </TouchableOpacity>
-              <Text style={{fontSize: 16, color: 'black', fontWeight: 'bold'}}>
-                Lead Details
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={{marginTop: -18, marginRight: 20}}
-              //onPress={handleCallPress}
-              onPress={() => Linking.openURL(`tel:${contact}`)}>
               <Image
-                source={require('../assets/callz.png')}
+                source={require('../assets/userr.png')} // Update with the actual path to your back button image
                 style={{
-                  width: 55,
-                  height: 55,
+                  width: 20,
+                  height: 20,
+                  tintColor: 'white', // You can customize the color of the back button
+                  marginRight: 5,
+                  //marginLeft: -10,
+                  marginTop: 2,
                 }}
               />
-            </TouchableOpacity>
+              <Text style={{color: 'white', fontSize: 16}}>
+                {firstName} {lastName}
+              </Text>
+            </View>
+            <View>
+              <Text style={{color: 'white', fontSize: 13, marginLeft: 25}}>
+                +91 {contact}
+              </Text>
+            </View>
           </View>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginTop: -15,
-              padding: 20,
+              marginVertical: 10,
             }}>
-            <View style={{marginLeft: 13}}>
-              <Text style={{fontSize: 15, color: 'black'}}>Lead Number</Text>
-              <Text style={{fontSize: 15, color: 'black'}}>65/67</Text>
-            </View>
-            <View style={{}}>
-              <Text style={{fontSize: 15, color: 'black'}}>Lead Actioner</Text>
-              <Text style={{fontSize: 15, color: 'black'}}>Member</Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            width: '100%',
-            height: 0.8,
-            backgroundColor: 'lightgray',
-            marginTop: -10,
-            marginBottom: 25,
-          }}></View>
-        <View
-          style={{
-            flexDirection: 'row',
-            // paddingHorizontal: 10,
-            marginVertical: 10,
-          }}>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              flex: 1,
-              borderBottomColor: '#3081ec',
-              borderBottomWidth: 1,
-              paddingHorizontal: 20,
-            }}>
-            <Image
-              source={require('../assets/Leadsdetails.png')}
-              style={{
-                width: 20,
-                height: 20,
-                tintColor: 'black', // You can customize the color of the back button
-                marginRight: 5,
-                //marginTop: 1,
-              }}
-            />
-            <View>
-              <Text
+            <View style={{flexDirection: 'row'}}>
+              <Image
+                source={require('../assets/113.png')} // Update with the actual path to your back button image
                 style={{
-                  fontSize: 16,
-                  color: 'black',
-                  fontWeight: 'bold',
+                  width: 25,
+                  height: 25,
+                  tintColor: 'white', // You can customize the color of the back button
                   marginRight: 5,
-                  marginBottom: 10,
-                }}>
-                Leads Details
-              </Text>
+                  //marginLeft: -10,
+                  marginTop: -3,
+                }}
+              />
+              <Text style={{color: 'white', marginLeft: -1}}>65/67</Text>
             </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              borderBottomColor: 'lightgray',
-              borderBottomWidth: 1,
-              paddingHorizontal: 20,
-            }}>
-            <Image
-              source={require('../assets/call-logs.png')}
-              style={{
-                width: 20,
-                height: 20,
-                tintColor: 'black', // You can customize the color of the back button
-                marginRight: 5,
-                //marginTop: 1,
-              }}
-            />
             <View>
-              <Text
+              <Timer />
+            </View>
+            <TouchableOpacity
+              onPress={openModal}
+              style={{
+                backgroundColor: 'white',
+                paddingHorizontal: 10,
+                paddingVertical: 3,
+                flexDirection: 'row',
+                borderRadius: 7,
+                //marginRight: 5,
+                marginTop: -3,
+              }}>
+              <Image
+                source={require('../assets/lead-follow.png')} // Update with the actual path to your back button image
                 style={{
-                  fontSize: 16,
-                  color: 'black',
-                  fontWeight: 'bold',
-                  marginBottom: 5,
-                }}>
-                Call Logs
+                  width: 15,
+                  height: 15,
+                  tintColor: '#3790ee', // You can customize the color of the back button
+                  marginRight: 5,
+                  marginTop: 2,
+                }}
+              />
+              <Text style={{fontSize: 13, color: '#3790ee', fontWeight: 600}}>
+                Lead Follow Up
               </Text>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
+        <View
+          style={{
+            margin: 10,
+            paddingHorizontal: 25,
+            backgroundColor: 'white',
+            paddingVertical: 10,
+            borderRadius: 10,
+            elevation: 5,
+          }}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+            <View style={{marginLeft: -30, flexDirection: 'row'}}>
+              <Image
+                source={require('../assets/applicationno.png')} // Update with the actual path to your back button image
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: 'black', // You can customize the color of the back button
+                  marginRight: 7,
+                  //marginLeft: -10,
+                  marginTop: 8,
+                }}
+              />
+              <View>
+                <Text style={{color: 'gray', fontSize: 13}}>
+                  Application Number
+                </Text>
+                <Text
+                  style={{fontSize: 17, fontWeight: 'bold', color: 'black'}}>
+                  SAG1095
+                </Text>
+              </View>
             </View>
-          </TouchableOpacity>
-        </View>
-
-        <View style={{padding: 22}}>
-          <View style={{flexDirection: 'row'}}>
             <View
               style={{
-                flex: 1,
-                borderWidth: 1,
-                borderColor: 'gray',
-                borderRadius: 5,
-                margin: 8,
-                paddingHorizontal: 7,
-                paddingVertical: 1,
-              }}>
-              <TextInput
-                style={{marginVertical: -5, color: 'black'}}
-                placeholder="Name"
-                placeholderTextColor={'gray'}
-                editable={true}
-                value={firstName}
-                onChangeText={setFirstName}
+                height: 50,
+                width: 1,
+                backgroundColor: 'gray',
+              }}></View>
+            <View style={{flexDirection: 'row'}}>
+              <Image
+                source={require('../assets/case.png')} // Update with the actual path to your back button image
+                style={{
+                  width: 35,
+                  height: 35,
+                  tintColor: 'black', // You can customize the color of the back button
+                  marginRight: 5,
+                  //marginLeft: -10,
+                  marginTop: 2,
+                }}
               />
-            </View>
-            <View
-              style={{
-                flex: 1,
-                borderWidth: 1,
-                borderColor: 'gray',
-                borderRadius: 5,
-                margin: 8,
-                paddingHorizontal: 7,
-                paddingVertical: 1,
-              }}>
-              <TextInput
-                style={{marginVertical: -5, color: 'black'}}
-                placeholder="Contact No"
-                keyboardType="number-pad"
-                placeholderTextColor={'gray'}
-                value={contact}
-                onChangeText={setContact}
-              />
+              <View style={{}}>
+                <Text style={{color: 'gray', fontSize: 13}}>Case Code</Text>
+                <Text
+                  style={{fontSize: 17, fontWeight: 'bold', color: 'black'}}>
+                  8596
+                </Text>
+              </View>
             </View>
           </View>
+        </View>
+        <TouchableOpacity
+          style={{
+            marginTop: 10,
+            marginBottom: 10,
+            backgroundColor: '#00bf62',
+            alignSelf: 'center',
+            // height: 50,
+            borderRadius: 20,
+            paddingHorizontal: 20,
+            paddingVertical: 7,
+          }}
+          onPress={() => Linking.openURL(`tel:${contact}`)}>
           <View
             style={{
-              //flex: 1,
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 5,
-              margin: 8,
-              paddingHorizontal: 7,
-              paddingVertical: 1,
-            }}>
-            <TextInput
-              style={{marginVertical: -5, color: 'black'}}
-              placeholderTextColor={'gray'}
-              placeholder="Address"
-              value={address}
-              onChangeText={setAddress}
+              flexDirection: 'row',
+              alignSelf: 'center',
+              //  marginRight: 20,
+              //  marginTop: -3,
+              gap: 10,
+            }}
+            //onPress={handleCallPress}
+          >
+            <Image
+              source={require('../assets/calll.png')} // Update with the actual path to your back button image
+              style={{
+                width: 26,
+                height: 26,
+                tintColor: 'white', // You can customize the color of the back button
+                //marginRight: 5,
+                //marginLeft: -10,
+                // marginTop: 5,
+              }}
             />
+            <Text
+              style={{
+                fontSize: 16,
+                color: 'white',
+                textAlignVertical: 'center',
+                // marginLeft: -5,
+              }}>
+              Call Now
+            </Text>
           </View>
-          <View style={{flexDirection: 'row'}}>
+        </TouchableOpacity>
+        <View
+          style={{
+            //flex: 1,
+            marginVertical: 10,
+            marginHorizontal: 10,
+            backgroundColor: 'white',
+            //padding: 10,
+            borderRadius: 10,
+            marginBottom: 20,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              // paddingHorizontal: 10,
+              marginTop: 10,
+            }}>
             <View
               style={{
+                flexDirection: 'row',
                 flex: 1,
-                borderWidth: 1,
-                borderColor: 'gray',
-                borderRadius: 5,
-                margin: 8,
-                paddingHorizontal: 7,
-                paddingVertical: 3,
+                borderBottomColor: 'lightgray',
+                borderBottomWidth: 1,
+                paddingHorizontal: 20,
+                marginTop: 5,
               }}>
+              <Image
+                source={require('../assets/Leadsdetails.png')}
+                style={{
+                  width: 20,
+                  height: 20,
+                  tintColor: 'black', // You can customize the color of the back button
+                  marginRight: 5,
+                  //marginTop: 1,
+                }}
+              />
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: 'black',
+                    fontWeight: 'bold',
+                    marginRight: 5,
+                    marginBottom: 10,
+                  }}>
+                  Leads Details
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={{padding: 15}}>
+            <View style={{flexDirection: 'row'}}>
               <View
                 style={{
-                  flexDirection: 'row',
-                  //justifyContent: 'space-between',
+                  flex: 1,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  borderRadius: 5,
+                  margin: 8,
+                  paddingHorizontal: 7,
+                  paddingVertical: 1,
                 }}>
-                <Dropdown
-                  mode="modal"
-                  style={{flex: 1, marginHorizontal: 5}}
-                  placeholderStyle={{
-                    color: 'gray',
-                    fontSize: 14,
-                  }}
-                  data={data}
-                  search
-                  labelField="label"
-                  valueField="value"
-                  placeholder="Insurer Name"
-                  searchPlaceholder="Search..."
-                  value={value}
-                  selectedTextStyle={{color: 'black'}}
-                  onChange={item => {
-                    setValue(item.value);
-                  }}
-                  itemTextStyle={{color: 'black'}}
+                <TextInput
+                  style={{marginVertical: -5, color: 'black'}}
+                  placeholder="Name"
+                  placeholderTextColor={'gray'}
+                  editable={true}
+                  value={firstName}
+                  onChangeText={setFirstName}
+                />
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  borderRadius: 5,
+                  margin: 8,
+                  paddingHorizontal: 7,
+                  paddingVertical: 1,
+                }}>
+                <TextInput
+                  style={{marginVertical: -5, color: 'black'}}
+                  placeholder="Contact No"
+                  keyboardType="number-pad"
+                  placeholderTextColor={'gray'}
+                  value={contact}
+                  onChangeText={setContact}
                 />
               </View>
             </View>
             <View
               style={{
-                flex: 1,
+                //flex: 1,
+                borderWidth: 1,
+                borderColor: 'gray',
+                borderRadius: 5,
+                margin: 8,
+                paddingHorizontal: 7,
+                paddingVertical: 1,
+              }}>
+              <TextInput
+                style={{marginVertical: -5, color: 'black'}}
+                placeholderTextColor={'gray'}
+                placeholder="Address"
+                value={address}
+                onChangeText={setAddress}
+              />
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  flex: 1,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  borderRadius: 5,
+                  margin: 8,
+                  paddingHorizontal: 7,
+                  paddingVertical: 3,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    //justifyContent: 'space-between',
+                  }}>
+                  <Dropdown
+                    // mode="modal"
+                    style={{flex: 1, marginHorizontal: 5}}
+                    placeholderStyle={{
+                      color: 'gray',
+                      fontSize: 14,
+                    }}
+                    data={data}
+                    search
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Insurer Name"
+                    searchPlaceholder="Search..."
+                    value={value}
+                    selectedTextStyle={{color: 'black'}}
+                    onChange={item => {
+                      setValue(item.value);
+                    }}
+                    itemTextStyle={{color: 'black'}}
+                  />
+                </View>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  borderWidth: 1,
+                  borderColor: 'gray',
+                  borderRadius: 5,
+                  margin: 8,
+                  paddingHorizontal: 7,
+                  paddingVertical: 3,
+                }}>
+                {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Dropdown
+                    //  mode="modal"
+                    style={{flex: 1, marginHorizontal: 5}}
+                    placeholderStyle={{
+                      color: 'gray',
+                      fontSize: 14,
+                    }}
+                    data={data1}
+                    search
+                    selectedTextStyle={{color: 'black'}}
+                    itemTextStyle={{color: 'black'}}
+                    // maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Plan Name"
+                    searchPlaceholder="Search..."
+                    value={value1}
+                    onChange={item => {
+                      setValue1(item.value);
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                //flex: 1,
                 borderWidth: 1,
                 borderColor: 'gray',
                 borderRadius: 5,
@@ -826,175 +916,137 @@ const Leadsdata = ({navigation}) => {
                   justifyContent: 'space-between',
                 }}>
                 <Dropdown
-                  mode="modal"
+                  //    mode="modal"
+                  style={{flex: 1, marginHorizontal: 5}}
+                  placeholderStyle={{color: 'gray', fontSize: 14}}
+                  selectedTextStyle={{color: 'black'}}
+                  // inputSearchStyle={styles.inputSearchStyle}
+                  //iconStyle={styles.iconStyle}
+                  data={data2}
+                  itemTextStyle={{color: 'black'}}
+                  search
+                  // maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Premium Payment Term "
+                  searchPlaceholder="Search..."
+                  value={value2}
+                  onChange={item => {
+                    setValue2(item.value);
+                  }}
+                />
+              </View>
+            </View>
+            <View
+              style={{
+                //flex: 1,
+                borderWidth: 1,
+                borderColor: 'gray',
+                borderRadius: 5,
+                margin: 8,
+                paddingHorizontal: 7,
+                paddingVertical: 3,
+              }}>
+              {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Dropdown
+                  //mode="modal"
                   style={{flex: 1, marginHorizontal: 5}}
                   placeholderStyle={{
                     color: 'gray',
                     fontSize: 14,
                   }}
-                  data={data1}
-                  search
                   selectedTextStyle={{color: 'black'}}
+                  // inputSearchStyle={styles.inputSearchStyle}
+                  //iconStyle={styles.iconStyle}
+                  data={data4}
                   itemTextStyle={{color: 'black'}}
+                  search
                   // maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder="Plan Name"
+                  placeholder="Status"
                   searchPlaceholder="Search..."
-                  value={value1}
+                  value={value4}
                   onChange={item => {
-                    setValue1(item.value);
+                    setValue4(item.value);
                   }}
                 />
               </View>
             </View>
-          </View>
-          <View
-            style={{
-              //flex: 1,
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 5,
-              margin: 8,
-              paddingHorizontal: 7,
-              paddingVertical: 3,
-            }}>
-            {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                //flex: 1,
+                borderWidth: 1,
+                borderColor: 'gray',
+                borderRadius: 5,
+                margin: 8,
+                paddingHorizontal: 7,
+                paddingVertical: 3,
               }}>
-              <Dropdown
-                mode="modal"
-                style={{flex: 1, marginHorizontal: 5}}
-                placeholderStyle={{color: 'gray', fontSize: 14}}
-                selectedTextStyle={{color: 'black'}}
-                // inputSearchStyle={styles.inputSearchStyle}
-                //iconStyle={styles.iconStyle}
-                data={data2}
-                itemTextStyle={{color: 'black'}}
-                search
-                // maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder="Premium Payment Term "
-                searchPlaceholder="Search..."
-                value={value2}
-                onChange={item => {
-                  setValue2(item.value);
-                }}
-              />
+              {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <Dropdown
+                  //  mode="modal"
+                  style={{flex: 1, marginHorizontal: 5}}
+                  placeholderStyle={{
+                    color: 'gray',
+                    fontSize: 14,
+                  }}
+                  selectedTextStyle={{color: 'black'}}
+                  // inputSearchStyle={styles.inputSearchStyle}
+                  //iconStyle={styles.iconStyle}
+                  data={data3}
+                  itemTextStyle={{color: 'black'}}
+                  search
+                  // maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder="Label"
+                  searchPlaceholder="Search..."
+                  value={value3}
+                  onChange={item => {
+                    setValue3(item.value);
+                  }}
+                />
+              </View>
             </View>
-          </View>
-          <View
-            style={{
-              //flex: 1,
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 5,
-              margin: 8,
-              paddingHorizontal: 7,
-              paddingVertical: 3,
-            }}>
-            {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Dropdown
-                mode="modal"
-                style={{flex: 1, marginHorizontal: 5}}
-                placeholderStyle={{
-                  color: 'gray',
-                  fontSize: 14,
-                }}
-                selectedTextStyle={{color: 'black'}}
-                // inputSearchStyle={styles.inputSearchStyle}
-                //iconStyle={styles.iconStyle}
-                data={data3}
-                itemTextStyle={{color: 'black'}}
-                search
-                // maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder="Label"
-                searchPlaceholder="Search..."
-                value={value3}
-                onChange={item => {
-                  setValue3(item.value);
-                }}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              //flex: 1,
-              borderWidth: 1,
-              borderColor: 'gray',
-              borderRadius: 5,
-              margin: 8,
-              paddingHorizontal: 7,
-              paddingVertical: 3,
-            }}>
-            {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Dropdown
-                mode="modal"
-                style={{flex: 1, marginHorizontal: 5}}
-                placeholderStyle={{
-                  color: 'gray',
-                  fontSize: 14,
-                }}
-                selectedTextStyle={{color: 'black'}}
-                // inputSearchStyle={styles.inputSearchStyle}
-                //iconStyle={styles.iconStyle}
-                data={data4}
-                itemTextStyle={{color: 'black'}}
-                search
-                // maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder="Status"
-                searchPlaceholder="Search..."
-                value={value4}
-                onChange={item => {
-                  setValue4(item.value);
-                }}
-              />
-            </View>
-          </View>
-          <TouchableOpacity
-            onPress={handleUpdate}
-            style={{
-              marginVertical: 20,
-              // flex: 1,
-              // height: '70%',
-              // width: '35%',
 
-              backgroundColor: '#0e4caf',
-              borderRadius: 10,
-              padding: 10,
-              paddingHorizontal: 25,
-              alignSelf: 'center',
-            }}>
-            <Text
+            <TouchableOpacity
+              onPress={handleUpdate}
               style={{
-                //alignSelf: 'center',
-                color: 'white',
-                fontSize: 13,
+                marginVertical: 20,
+                // flex: 1,
+                // height: '70%',
+                // width: '35%',
 
-                fontWeight: 'bold',
-                //marginHorizontal: 10,
+                backgroundColor: '#0e4caf',
+                borderRadius: 10,
+                padding: 10,
+                paddingHorizontal: 25,
+                alignSelf: 'center',
               }}>
-              Save Details
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  //alignSelf: 'center',
+                  color: 'white',
+                  fontSize: 13,
+
+                  fontWeight: 'bold',
+                  //marginHorizontal: 10,
+                }}>
+                Save Details
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
 

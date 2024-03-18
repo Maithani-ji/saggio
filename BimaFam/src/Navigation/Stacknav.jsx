@@ -18,6 +18,7 @@ import {getData} from '../utils/AsyncStorag';
 import CalculatorStk from '../Screens/CalculatorStk';
 import Calculator from '../Screens/CalculatorStk';
 import Leadsfollowup from '../Screens/Leadsfollowup';
+import Customerdetail from '../Screens/Customerdetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -87,6 +88,11 @@ const Stacknav = () => {
       <Stack.Screen
         name="Leadsfollowup"
         component={Leadsfollowup}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Customerdetail"
+        component={Customerdetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

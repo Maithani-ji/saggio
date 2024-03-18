@@ -45,6 +45,7 @@ const Login = () => {
         `${BASE_URL}/api/login`,
         requestBody,
       );
+      console.log('Server response:', response.data, response.data.data);
       if (response.data.status === 200) {
         // console.log('Server response:', response);
         console.log('Server response:', response.data, response.data.data.id);
@@ -62,7 +63,7 @@ const Login = () => {
         setPassword('');
         setIsLoggedin(true);
       } else {
-        throw new Error('Wrong inputs');
+        throw new Error('Wrong credentials,check your credentials!!');
       }
       // navigation.navigate('Stacknav');
       // setmain(true);
@@ -75,7 +76,7 @@ const Login = () => {
         duration: Snackbar.LENGTH_SHORT,
         marginBottom: 70,
       });
-      console.error('Error:', error.message);
+      //console.error('Error:', error.message);
       //Alert.alert('An error occurred.', error.message);
     } finally {
       setLoad(false);
@@ -89,10 +90,10 @@ const Login = () => {
       <ScrollView style={{margin: 10}} showsVerticalScrollIndicator={false}>
         <View style={{marginTop: 50}}>
           <Image
-            source={require('../assets/gg.png')}
+            source={require('../assets/lbcg.png')}
             style={{
               width: '100%',
-              height: 150,
+              height: 160,
 
               //  tintColor: '#194c9e',
             }}

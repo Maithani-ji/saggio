@@ -13,7 +13,7 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const EditLead = ({navigation}) => {
+const Customerdetail = ({navigation}) => {
   const [selectedId, setSelectedId] = useState();
   const [value, setValue] = useState(null);
   const [value1, setValue1] = useState(null);
@@ -28,20 +28,6 @@ const EditLead = ({navigation}) => {
 
   const [datesourcetext, setdatesourcetext] = useState('');
   const [datefollowtext, setdatefollowtext] = useState('');
-
-  const [options, setOptions] = useState([
-    {label: 'Follow Up', value: 'Follow Up'},
-    {label: 'Visit', value: 'Visit'},
-  ]);
-
-  const handleOptionChange = selectedOption => {
-    setOptions(
-      options.map(option => ({
-        ...option,
-        selected: option.value === selectedOption.value,
-      })),
-    );
-  };
 
   const handlesourceDateChange = (event, selectedDate) => {
     setshow(false);
@@ -83,24 +69,13 @@ const EditLead = ({navigation}) => {
     navigation.goBack();
   };
 
-  const radioButtons = useMemo(
-    () => [
-      {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: 'Life Insurance',
-        value: 'option1',
-      },
-      {
-        id: '2',
-        label: 'General insurance',
-        value: 'option2',
-      },
-    ],
-    [],
-  );
   const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption1, setSelectedOption1] = useState('');
   const handleRadioPress = option => {
     setSelectedOption(option);
+  };
+  const handleRadioPress1 = option => {
+    setSelectedOption1(option);
   };
   const renderRadioButton = (option, label) => {
     return (
@@ -108,25 +83,26 @@ const EditLead = ({navigation}) => {
         style={{
           flexDirection: 'row',
           marginTop: 5,
-          alignItems: 'center', // Align items vertically in the center
+          alignItems: 'center',
+          // Align items vertically in the center
         }}
         onPress={() => handleRadioPress(option)}>
         <View
           style={{
-            width: 20,
-            height: 20,
+            width: 15,
+            height: 15,
             borderRadius: 10,
             borderWidth: 1.5,
             borderColor: 'black',
             justifyContent: 'center',
             alignItems: 'center',
-            marginRight: 10,
+            marginRight: 5,
           }}>
           {selectedOption === option && (
             <View
               style={{
-                width: 10,
-                height: 10,
+                width: 5,
+                height: 5,
                 borderRadius: 6,
                 backgroundColor: 'black',
               }}
@@ -136,7 +112,7 @@ const EditLead = ({navigation}) => {
         <View style={{marginRight: 5}}>
           <Text
             style={{
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: selectedOption === option ? 'normal' : 'normal',
               color: 'gray',
             }}>
@@ -146,30 +122,84 @@ const EditLead = ({navigation}) => {
       </TouchableOpacity>
     );
   };
-
+  const renderRadioButton1 = (option, label) => {
+    return (
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          marginTop: 5,
+          alignItems: 'center',
+          // Align items vertically in the center
+        }}
+        onPress={() => handleRadioPress1(option)}>
+        <View
+          style={{
+            width: 15,
+            height: 15,
+            borderRadius: 10,
+            borderWidth: 1.5,
+            borderColor: 'black',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginRight: 5,
+          }}>
+          {selectedOption1 === option && (
+            <View
+              style={{
+                width: 5,
+                height: 5,
+                borderRadius: 6,
+                backgroundColor: 'black',
+              }}
+            />
+          )}
+        </View>
+        <View style={{marginRight: 5}}>
+          <Text
+            style={{
+              fontSize: 12,
+              fontWeight: selectedOption === option ? 'normal' : 'normal',
+              color: 'gray',
+            }}>
+            {label}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   const data = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
+    {label: 'Male', value: 'male'},
+    {label: 'Female', value: 'female'},
+    {label: 'Others', value: 'others'},
+    // {label: 'Item 4', value: '4'},
   ];
   const data1 = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
+    {label: 'Married', value: 'Married'},
+    {label: 'Single', value: 'Single'},
+    {label: 'Widowed', value: 'Widowed'},
+    {label: 'Divorced', value: 'Divorced'},
+    {label: 'Seperated', value: 'Seperated'},
   ];
   const data2 = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
+    {label: 'Salaried', value: 'Salaried'},
+    {
+      label: 'Self Employed/Business Owner',
+      value: 'Self Employed/Business Owner ',
+    },
+    {label: 'Student', value: 'Student'},
+    {label: 'Others', value: 'Others'},
   ];
   const data3 = [
-    {label: 'Item 1', value: '1'},
-    {label: 'Item 2', value: '2'},
-    {label: 'Item 3', value: '3'},
-    {label: 'Item 4', value: '4'},
+    {label: '1', value: '1'},
+    {label: '2', value: '2'},
+    {label: '3', value: '3'},
+    {label: '4', value: '4'},
+    {label: '5', value: '5'},
+    {label: '6', value: '6'},
+    {label: '7', value: '7'},
+    {label: '8', value: '8'},
+    {label: '9', value: '9'},
+    {label: '10', value: '10'},
   ];
 
   return (
@@ -194,7 +224,7 @@ const EditLead = ({navigation}) => {
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'black'}}>Edit Lead</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Edit Customer</Text>
       </View>
       <ScrollView>
         <View
@@ -205,156 +235,22 @@ const EditLead = ({navigation}) => {
             borderRadius: 10,
             padding: 10,
           }}>
-          <Text
-            style={{
-              color: 'black',
-              fontWeight: 'bold',
-              //alignSelf: 'center',
-              marginVertical: 2.5,
-              marginRight: 3,
-            }}>
-            Type:
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              //justifyContent: 'space-between',
-              //margin: 8,
-            }}>
-            {/* <Text
-              style={{
-                color: 'black',
-                fontWeight: 'bold',
-                alignSelf: 'center',
-                marginVertical: 2.5,
-                marginRight: 3,
-              }}>
-              Type:
-            </Text> */}
-            {/* <View style={{width: '100%', marginBottom: 5, marginLeft: 10}}> */}
-            {/* <RadioGroup
-                radioButtons={radioButtons}
-                onPress={setSelectedId}
-                selectedId={selectedId}
-                layout="row"
-                containerStyle={
-                  {
-                    //alignSelf: 'flex-end'
-                  }
-                }
-              /> */}
-            <View
-              style={{
-                flexDirection: 'row',
-                marginLeft: 10,
-                gap: 10,
-                marginVertical: 5,
-              }}>
-              {renderRadioButton('life insurance', 'Life Insurance')}
-              {renderRadioButton('general insurance', 'General Insurance')}
-            </View>
-            {/* // </View> */}
-          </View>
-          <View
-            style={{
-              borderWidth: 0.4,
-              borderColor: 'black',
-              borderRadius: 5,
-              margin: 8,
-              paddingHorizontal: 7,
-              paddingVertical: 1,
-            }}>
-            <Text style={{marginHorizontal: 4, color: 'gray'}}>Plan</Text>
-            <TextInput
-              style={{
-                // marginTop: -10,
-                marginVertical: -13,
-                color: 'black',
-              }}
-              placeholder="LIC Jeevan Amar"
-              placeholderTextColor={'darkgray'}
+          {show && (
+            <DateTimePicker
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={handlesourceDateChange}
+              //onDismiss={() => setshowsourceDatePicker(false)}
             />
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <View
-              style={{
-                flex: 1,
-                borderWidth: 0.4,
-                borderColor: 'black',
-                borderRadius: 5,
-                margin: 8,
-                paddingHorizontal: 7,
-                paddingVertical: 1,
-              }}>
-              <Text
-                style={{
-                  marginHorizontal: 3,
-                  color: 'gray',
-                }}>
-                Case Code
-              </Text>
+          )}
 
-              <TextInput
-                style={{marginVertical: -14, color: 'black'}}
-                placeholder="BMF-54721"
-                placeholderTextColor={'darkgray'}
-              />
-              {/* <Image
-                  source={require('../assets/dropdown.png')} // Update with the actual path to your back button image
-                  style={{
-                    marginTop: -10,
-                    width: 24,
-                    height: 24,
-                    // You can customize the color of the back button
-                    marginRight: 10,
-                    alignSelf: 'center',
-                  }}
-                /> */}
-            </View>
-            {show && (
-              <DateTimePicker
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={handlesourceDateChange}
-                //onDismiss={() => setshowsourceDatePicker(false)}
-              />
-            )}
-            <TouchableOpacity
-              onPress={() => showMode('date')}
-              style={{
-                flex: 1,
-                borderWidth: 0.4,
-                borderColor: 'black',
-                borderRadius: 5,
-                margin: 8,
-                paddingHorizontal: 7,
-                paddingVertical: 1,
-              }}>
-              <Text style={{marginHorizontal: 4, color: 'gray'}}>
-                Sourcing Date
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <TextInput
-                  style={{marginVertical: -14, color: 'black'}}
-                  placeholder="DD-MM-YYYY"
-                  value={datesourcetext}
-                  editable={false}
-                  placeholderTextColor={'darkgray'}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
           <Text
             style={{
               color: 'black',
               fontWeight: 'bold',
-
+              marginLeft: 8,
               marginVertical: 5,
               //marginHorizontal: 3,
             }}>
@@ -372,7 +268,7 @@ const EditLead = ({navigation}) => {
                 paddingVertical: 1,
               }}>
               <TextInput
-                style={{marginVertical: -5, color: 'black'}}
+                style={{marginVertical: -5, color: 'black', fontSize: 14}}
                 placeholder="Name"
                 placeholderTextColor={'gray'}
               />
@@ -388,7 +284,7 @@ const EditLead = ({navigation}) => {
                 paddingVertical: 1,
               }}>
               <TextInput
-                style={{marginVertical: -5, color: 'black'}}
+                style={{marginVertical: -5, color: 'black', fontSize: 14}}
                 placeholder="Contact No"
                 placeholderTextColor={'gray'}
               />
@@ -405,11 +301,12 @@ const EditLead = ({navigation}) => {
               paddingVertical: 1,
             }}>
             <TextInput
-              style={{marginVertical: -5, color: 'black'}}
+              style={{marginVertical: -5, color: 'black', fontSize: 14}}
               placeholder="Address"
               placeholderTextColor={'gray'}
             />
           </View>
+
           <View style={{flexDirection: 'row'}}>
             <View
               style={{
@@ -436,14 +333,14 @@ const EditLead = ({navigation}) => {
                   search
                   labelField="label"
                   valueField="value"
-                  placeholder="Insurer Name"
+                  placeholder="Gender"
                   searchPlaceholder="Search..."
                   value={value}
                   onChange={item => {
                     setValue(item.value);
                   }}
                   itemTextStyle={{color: 'black'}}
-                  selectedTextStyle={{color: 'black'}}
+                  selectedTextStyle={{color: 'black', fontSize: 14}}
                 />
               </View>
             </View>
@@ -455,35 +352,87 @@ const EditLead = ({navigation}) => {
                 borderRadius: 5,
                 margin: 8,
                 paddingHorizontal: 7,
-                paddingVertical: 3,
+                paddingVertical: 1,
               }}>
               {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
-              <View
+              {show1 && (
+                <DateTimePicker
+                  value={date1}
+                  mode={mode1}
+                  is24Hour={true}
+                  display="default"
+                  onChange={handlesourceDateChange1}
+                  //onDismiss={() => setshowsourceDatePicker(false)}
+                />
+              )}
+              <TouchableOpacity
+                onPress={() => showMode1('date')}
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <Dropdown
-                  style={{flex: 1, marginHorizontal: 5}}
-                  placeholderStyle={{
-                    color: 'gray',
+                <TextInput
+                  style={{
+                    flex: 1,
                     fontSize: 14,
+                    marginVertical: -5,
+                    color: 'black',
                   }}
-                  data={data1}
-                  search
-                  // maxHeight={300}
-                  labelField="label"
-                  valueField="value"
-                  placeholder="Plan Name"
-                  searchPlaceholder="Search..."
-                  value={value1}
-                  onChange={item => {
-                    setValue1(item.value);
-                  }}
-                  itemTextStyle={{color: 'black'}}
-                  selectedTextStyle={{color: 'black'}}
+                  editable={false}
+                  value={datefollowtext}
+                  placeholder="DOB"
+                  placeholderTextColor={'gray'}
                 />
-              </View>
+                <Image
+                  source={require('../assets/Evnt.png')} // Update with the actual path to your back button image
+                  style={{
+                    // marginTop: ,
+                    width: 20,
+                    height: 20,
+                    tintColor: 'gray',
+                    // You can customize the color of the back button
+                    marginRight: 10,
+                    alignSelf: 'center',
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              borderWidth: 1,
+              borderColor: 'gray',
+              borderRadius: 5,
+              margin: 8,
+              paddingHorizontal: 7,
+              paddingVertical: 3,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Dropdown
+                style={{flex: 1, marginHorizontal: 5}}
+                placeholderStyle={{
+                  color: 'gray',
+                  fontSize: 14,
+                }}
+                data={data2}
+                search
+                // maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder="Occupation"
+                searchPlaceholder="Search..."
+                value={value2}
+                onChange={item => {
+                  setValue2(item.value);
+                }}
+                itemTextStyle={{color: 'black'}}
+                selectedTextStyle={{color: 'black', fontSize: 14}}
+              />
             </View>
           </View>
           <View
@@ -508,19 +457,19 @@ const EditLead = ({navigation}) => {
                 //selectedTextStyle={styles.selectedTextStyle}
                 // inputSearchStyle={styles.inputSearchStyle}
                 //iconStyle={styles.iconStyle}
-                data={data2}
+                data={data1}
                 search
                 // maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder="Premium Payment Term "
+                placeholder="Marital Status "
                 searchPlaceholder="Search..."
-                value={value2}
+                value={value1}
                 onChange={item => {
-                  setValue2(item.value);
+                  setValue1(item.value);
                 }}
                 itemTextStyle={{color: 'black'}}
-                selectedTextStyle={{color: 'black'}}
+                selectedTextStyle={{color: 'black', fontSize: 14}}
               />
             </View>
           </View>
@@ -554,14 +503,14 @@ const EditLead = ({navigation}) => {
                 // maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder="Policy Term"
+                placeholder="Children"
                 searchPlaceholder="Search..."
                 value={value3}
                 onChange={item => {
                   setValue3(item.value);
                 }}
                 itemTextStyle={{color: 'black'}}
-                selectedTextStyle={{color: 'black'}}
+                selectedTextStyle={{color: 'black', fontSize: 14}}
               />
             </View>
           </View>
@@ -576,29 +525,19 @@ const EditLead = ({navigation}) => {
                 paddingHorizontal: 7,
                 paddingVertical: 3,
               }}>
-              {/* <Text style={{marginHorizontal: 4}}>Case Code</Text> */}
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: 2,
+                  marginLeft: 5,
+                  //flexDirection: 'row',
+                  //justifyContent: 'space-between',
                 }}>
-                {options.map(option => (
-                  <TouchableOpacity
-                    key={option.value}
-                    onPress={() => handleOptionChange(option)}>
-                    <Text
-                      style={{
-                        color: option.selected ? 'black' : 'gray',
-                        alignSelf: 'center',
-                        marginTop: 5,
-                        fontWeight: option.selected ? 'bold' : 'normal',
-                        marginHorizontal: 5,
-                      }}>
-                      {option.label}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+                <Text style={{fontSize: 13, color: 'gray'}}>
+                  Health Insurance
+                </Text>
+                <View style={{flexDirection: 'row', gap: 10}}>
+                  {renderRadioButton('Yes', 'Yes')}
+                  {renderRadioButton('No', 'No')}
+                </View>
               </View>
             </View>
             <View
@@ -609,50 +548,23 @@ const EditLead = ({navigation}) => {
                 borderRadius: 5,
                 margin: 8,
                 paddingHorizontal: 7,
-                paddingVertical: 1,
+                paddingVertical: 3,
               }}>
               {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
-              {show1 && (
-                <DateTimePicker
-                  value={date1}
-                  mode={mode1}
-                  is24Hour={true}
-                  display="default"
-                  onChange={handlesourceDateChange1}
-                  //onDismiss={() => setshowsourceDatePicker(false)}
-                />
-              )}
-              <TouchableOpacity
-                onPress={() => showMode1('date')}
+              <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  marginLeft: 5,
+                  // flexDirection: 'row',
+                  //justifyContent: 'space-between',
                 }}>
-                <TextInput
-                  style={{
-                    flex: 1,
-                    fontSize: 13,
-                    marginVertical: -5,
-                    color: 'black',
-                  }}
-                  editable={false}
-                  value={datefollowtext}
-                  placeholder="DD-MM-YYYY"
-                  placeholderTextColor={'gray'}
-                />
-                <Image
-                  source={require('../assets/Evnt.png')} // Update with the actual path to your back button image
-                  style={{
-                    // marginTop: ,
-                    width: 20,
-                    height: 20,
-                    tintColor: 'gray',
-                    // You can customize the color of the back button
-                    marginRight: 10,
-                    alignSelf: 'center',
-                  }}
-                />
-              </TouchableOpacity>
+                <Text style={{fontSize: 13, color: 'gray'}}>
+                  Motor Insurance
+                </Text>
+                <View style={{flexDirection: 'row', gap: 10, marginBottom: 2}}>
+                  {renderRadioButton1('Yes', 'Yes')}
+                  {renderRadioButton1('No', 'No')}
+                </View>
+              </View>
             </View>
           </View>
           <View
@@ -664,7 +576,7 @@ const EditLead = ({navigation}) => {
               marginBottom: 25,
             }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Active Leads')}
+              onPress={() => navigation.navigate('Customers')}
               style={{
                 //marginVertical: 10,
                 // flex: 1,
@@ -689,7 +601,7 @@ const EditLead = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => navigation.goBack()}
               style={{
                 //marginVertical: 10,
                 // flex: 1,
@@ -719,4 +631,4 @@ const EditLead = ({navigation}) => {
   );
 };
 
-export default EditLead;
+export default Customerdetail;

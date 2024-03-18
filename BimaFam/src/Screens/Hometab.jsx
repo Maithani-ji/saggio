@@ -9,6 +9,7 @@ import {
   StyleSheet,
   View,
   Linking,
+  RefreshControl,
 } from 'react-native';
 import CustomDrawerButton from '../Components/CustomdrawerButton';
 import NotificationBtn from '../Components/NotificationBtn';
@@ -34,10 +35,13 @@ const Home = () => {
   //     fetchActiveprojectData();
   //   }, [fetchDashboardData, fetchActiveprojectData]),
   // ); // Dependency ar
-  // useEffect(() => {
-  //   fetchDashboardData();
-  //   fetchActiveprojectData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = () => {
+    fetchDashboardData();
+    fetchActiveprojectData();
+  };
   const fetchDashboardData = useMemo(
     () => async () => {
       try {
@@ -46,11 +50,14 @@ const Home = () => {
         console.log(id);
 
         const response = await axios.post(`${BASE_URL}/api/getDashboard`, {
-          user_id: id,
+          user_id: 2,
         });
         if (response.data.status === 200) {
           console.log(response.data.data);
           setData(response.data.data);
+        } else if (response.data.data == null) {
+          //navigation.goBack();
+          throw new Error('No Active Dashboard data available ');
         } else {
           throw new Error('Invalid response from dashboard');
         }
@@ -82,6 +89,9 @@ const Home = () => {
         console.log('member', response.data);
         if (response.data.status === 200) {
           setProjectdata(response.data.data);
+        } else if (response.data.data == null) {
+          //navigation.goBack();
+          throw new Error('No Active Project available ');
         } else {
           throw new Error('Invalid response from Active project');
         }
@@ -100,17 +110,17 @@ const Home = () => {
     },
     [],
   );
-  const memoizedFetchDashboardData = useMemo(() => fetchDashboardData, []);
-  const memoizedFetchActiveprojectData = useMemo(
-    () => fetchActiveprojectData,
-    [],
-  );
-  useFocusEffect(
-    React.useCallback(() => {
-      memoizedFetchDashboardData();
-      memoizedFetchActiveprojectData();
-    }, [memoizedFetchDashboardData, memoizedFetchActiveprojectData]),
-  ); // Dependency ar
+  // const memoizedFetchDashboardData = useMemo(() => fetchDashboardData, []);
+  // const memoizedFetchActiveprojectData = useMemo(
+  //   () => fetchActiveprojectData,
+  //   [],
+  // );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     memoizedFetchDashboardData();
+  //     memoizedFetchActiveprojectData();
+  //   }, [memoizedFetchDashboardData, memoizedFetchActiveprojectData]),
+  // ); // Dependency ar
   // useEffect(() => {
   //   memoizedFetchDashboardData();
   //   memoizedFetchActiveprojectData();
@@ -122,7 +132,7 @@ const Home = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       {/* STARTING OF Homepage above logo and  drwaer button and notification */}
-      <View>
+      <View style={{elevation: 5}}>
         <Image
           source={require('../assets/bcg.png')}
           style={{
@@ -144,16 +154,18 @@ const Home = () => {
       {/* </ImageBackground> */}
       {/* Ending OF Homepage above logo and  drwaer button and notification */}
 
-      <ScrollView>
-        <View style={{flex: 1, margin: 20}}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl onRefresh={fetchData} />}>
+        <View style={{flex: 1, marginHorizontal: 20}}>
           {/* Display Board Start */}
           <View
             style={{
               flex: 1,
               flexDirection: 'row',
               justifyContent: 'center',
-
-              gap: 5,
+              marginTop: 10,
+              gap: 10,
             }}>
             <LinearGradient
               colors={['#7474BF', '#348AC7']}

@@ -1,22 +1,25 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import call from 'react-native-phone-call';
 import {useNavigation} from '@react-navigation/native';
-const ActiveLeadsData = ({index}) => {
+
+const ActiveLeadsData = ({index, data}) => {
+  // console.log('data', data);
   const navigation = useNavigation();
   const handleCallPress = () => {
     const args = {
-      number: '999999999', // String value with the number to call
+      number: data?.phone, // String value with the number to call
       prompt: true, // Optional boolean property. Determines if the user should be prompted prior to the call
       skipCanOpen: true, // Skip the canOpenURL check
     };
 
     call(args).catch(console.error);
   };
+
   return (
     <View>
       <View
-        key={index}
+        // key={index}
         style={{
           flex: 1,
           flexDirection: 'row',
@@ -51,7 +54,7 @@ const ActiveLeadsData = ({index}) => {
           />
           <View style={{flex: 1, flexDirection: 'column', marginLeft: 5}}>
             <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>
-              Surya Kumar
+              {data?.first_name}
             </Text>
             <View
               style={{
@@ -69,7 +72,7 @@ const ActiveLeadsData = ({index}) => {
                     color: 'gray',
                     textAlignVertical: 'center',
                   }}>
-                  989898989
+                  {data?.phone}
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
@@ -84,7 +87,7 @@ const ActiveLeadsData = ({index}) => {
                     color: 'gray',
                     textAlignVertical: 'center',
                   }}>
-                  abcd@gmail.com
+                  {data?.email}
                 </Text>
               </View>
 
@@ -100,7 +103,13 @@ const ActiveLeadsData = ({index}) => {
                     color: 'gray',
                     textAlignVertical: 'center',
                   }}>
-                  abcd gurgaon sector 5
+                  {data?.city +
+                    ' ' +
+                    data?.state +
+                    ' ' +
+                    data?.zip +
+                    ' ' +
+                    data?.country}
                 </Text>
               </View>
             </View>

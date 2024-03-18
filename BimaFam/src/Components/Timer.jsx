@@ -24,22 +24,22 @@ const Timer = () => {
     return () => clearInterval(timer); // Cleanup the timer on component unmount
   }, [seconds]);
   return (
-    <View style={{flexDirection: 'row', marginTop: 5}}>
+    <View style={{flexDirection: 'row'}}>
       <Image
         source={require('../assets/Time-icon.png')} // Update with the actual path to your back button image
         style={{
-          width: 24,
-          height: 24,
-          tintColor: 'black', // You can customize the color of the back button
+          width: 20,
+          height: 20,
+          tintColor: 'white', // You can customize the color of the back button
         }}
       />
       <Text
         style={{
-          fontSize: 19,
+          fontSize: 13,
           marginLeft: 10,
-          marginTop: -2,
+          // marginTop: -2,
           fontWeight: 'bold',
-          color: 'black',
+          color: 'white',
         }}>{`${hours.toString().padStart(2, '0')}:${minutes
         .toString()
         .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}</Text>
