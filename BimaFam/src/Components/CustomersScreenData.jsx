@@ -72,7 +72,7 @@ const CustomersScreenData = ({index, item}) => {
           //marginTop: 8,
         }}>
         <Image
-          source={require('../assets/user.png')}
+          source={require('../assets/user-icon.png')}
           style={{
             width: 40,
             height: 40,

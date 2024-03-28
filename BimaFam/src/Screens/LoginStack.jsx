@@ -12,7 +12,7 @@ import React, {useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import {storeData} from '../utils/AsyncStorag';
+import {getData, storeData} from '../utils/AsyncStorag';
 
 import {useLogin} from '../utils/LoginproviderContext';
 import Loading from '../loadingcomponent/loading';
@@ -25,7 +25,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [load, setLoad] = useState(false);
-  const {setIsLoggedin} = useLogin();
+  const {setIsLoggedin, setUser} = useLogin();
   const handleSubmit = async () => {
     setLoad(true);
     try {
@@ -55,12 +55,20 @@ const Login = () => {
         Snackbar.show({
           text: 'Logged in Successfully.',
           textColor: 'white',
-          backgroundColor: 'green',
+          backgroundColor: '#3aba40',
           duration: Snackbar.LENGTH_SHORT,
           marginBottom: 70,
         });
         setEmail('');
         setPassword('');
+        await storeData('role', response.data.data.role_id.toString());
+        const role = await getData('role');
+        console.log('rolelogin', role);
+        if (role == 1) {
+          setUser(true);
+        } else {
+          setUser(false);
+        }
         setIsLoggedin(true);
       } else {
         throw new Error('Wrong credentials,check your credentials!!');
@@ -90,7 +98,7 @@ const Login = () => {
       <ScrollView style={{margin: 10}} showsVerticalScrollIndicator={false}>
         <View style={{marginTop: 50}}>
           <Image
-            source={require('../assets/lbcg.png')}
+            source={require('../assets/backg.png')}
             style={{
               width: '100%',
               height: 160,

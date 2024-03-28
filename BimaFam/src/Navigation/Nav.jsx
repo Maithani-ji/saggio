@@ -8,7 +8,7 @@ import {useLogin} from '../utils/LoginproviderContext';
 
 const Nav = () => {
   //const [loggedin, setloggedin] = useState(false);
-  const {isLoggedin, setIsLoggedin} = useLogin();
+  const {isLoggedin, setIsLoggedin, setUser} = useLogin();
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -24,8 +24,16 @@ const Nav = () => {
   useEffect(() => {
     const fetchData = async () => {
       const id = await getData('user');
+      const role = await getData('role');
+      console.log('rolenav', role);
       if (id) {
-        setIsLoggedin(true);
+        if (role == 1) {
+          setUser(true);
+          setIsLoggedin(true);
+        } else {
+          setUser(false);
+          setIsLoggedin(true);
+        }
       } else {
         setIsLoggedin(false);
       }

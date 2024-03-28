@@ -7,8 +7,11 @@ import Customers from '../Screens/Customerstab';
 import Packages from '../Screens/Packagestab';
 import Home from '../Screens/Hometab';
 import Evnt from '../assets/Evnt.png';
+import FMhome from '../Screens/Fmhometab';
+import {useLogin} from '../utils/LoginproviderContext';
 const Tab = createBottomTabNavigator();
 const Tabnav = () => {
+  const {user} = useLogin();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -19,39 +22,76 @@ const Tabnav = () => {
         },
         // tabBarLabel:{false}
       }}>
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarLabel: '',
-          tabBarLabelStyle: {
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 11,
-            marginBottom: 0,
-            fontFamily: 'Arial',
-          },
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <View style={{marginBottom: 0}}>
-              <Image
-                // source={Evnt} // Update the file extension if needed
-                source={
-                  !focused
-                    ? require('../assets/Home.png')
-                    : require('../assets/homes.png')
-                }
-                style={{
-                  height: focused ? 29 : 32,
-                  width: focused ? 29 : 32,
+      {user == false ? (
+        <Tab.Screen
+          name="FMHome"
+          component={FMhome}
+          options={{
+            tabBarLabel: '',
+            tabBarLabelStyle: {
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: 11,
+              marginBottom: 0,
+              fontFamily: 'Arial',
+            },
+            headerShown: false,
+            tabBarIcon: ({focused}) => (
+              <View style={{marginBottom: 0}}>
+                <Image
+                  // source={Evnt} // Update the file extension if needed
+                  source={
+                    !focused
+                      ? require('../assets/Home.png')
+                      : require('../assets/homes.png')
+                  }
+                  style={{
+                    height: focused ? 29 : 32,
+                    width: focused ? 29 : 32,
 
-                  tintColor: focused ? 'red' : 'gray', // Set the color to white
-                }} // Adjust the height and width as needed
-              />
-            </View>
-          ),
-        }}
-      />
+                    tintColor: focused ? 'red' : 'gray', // Set the color to white
+                  }} // Adjust the height and width as needed
+                />
+              </View>
+            ),
+          }}
+        />
+      ) : (
+        <Tab.Screen
+          name="Home"
+          component={Home}
+          options={{
+            tabBarLabel: '',
+            tabBarLabelStyle: {
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: 11,
+              marginBottom: 0,
+              fontFamily: 'Arial',
+            },
+            headerShown: false,
+            tabBarIcon: ({focused}) => (
+              <View style={{marginBottom: 0}}>
+                <Image
+                  // source={Evnt} // Update the file extension if needed
+                  source={
+                    !focused
+                      ? require('../assets/Home.png')
+                      : require('../assets/homes.png')
+                  }
+                  style={{
+                    height: focused ? 29 : 32,
+                    width: focused ? 29 : 32,
+
+                    tintColor: focused ? 'red' : 'gray', // Set the color to white
+                  }} // Adjust the height and width as needed
+                />
+              </View>
+            ),
+          }}
+        />
+      )}
+
       <Tab.Screen
         name="Packages"
         component={Packages}

@@ -38,7 +38,7 @@ const Leadsdata = ({navigation}) => {
   const [value3, setValue3] = useState(null);
   const [value4, setValue4] = useState(null);
   const [notes, setNotes] = useState(null);
-
+  const [remark, setRemark] = useState(null);
   const [load, setLoad] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -74,9 +74,9 @@ const Leadsdata = ({navigation}) => {
 
         await Promise.all([
           fetchInsurerlist(),
-          fetchPolicyplans(),
+          //fetchPolicyplans(),
           fetchPaymentmode(),
-          fetchLabellist(),
+          // fetchLabellist(),
           fetchLeadStatus(),
           fetchData(),
         ]);
@@ -142,7 +142,7 @@ const Leadsdata = ({navigation}) => {
       setLoad(false);
     }
   };
-  const fetchPolicyplans = async () => {
+  const fetchPolicyplans = async in_id => {
     try {
       setLoad(true);
 
@@ -150,7 +150,8 @@ const Leadsdata = ({navigation}) => {
 
       const response = await axios.post(`${BASE_URL}/api/getPolicyPlans`, {
         // project_id: 8,
-        user_id: 1,
+        user_id: id,
+        insurer_id: in_id,
       });
       //  console.log(response.data);
       // console.log(response.data.status_code);
@@ -190,7 +191,7 @@ const Leadsdata = ({navigation}) => {
 
       const response = await axios.post(`${BASE_URL}/api/getInsurer`, {
         // project_id: 8,
-        user_id: 1,
+        user_id: id,
       });
       //  console.log(response.data);
       //   console.log(response.data.status_code);
@@ -228,10 +229,13 @@ const Leadsdata = ({navigation}) => {
 
       const id = await getData('user');
 
-      const response = await axios.post(`${BASE_URL}/api/getPaymentMode`, {
-        // project_id: 8,
-        user_id: 1,
-      });
+      const response = await axios.post(
+        `${BASE_URL}/api/getPremiumPaymentTerm`,
+        {
+          // project_id: 8,
+          user_id: id,
+        },
+      );
       //console.log(response.data);
       // console.log(response.data.status);
       if (response.data.status === 200) {
@@ -261,45 +265,45 @@ const Leadsdata = ({navigation}) => {
       setLoad(false);
     }
   };
-  const fetchLabellist = async () => {
-    try {
-      setLoad(true);
+  // const fetchLabellist = async () => {
+  //   try {
+  //     setLoad(true);
 
-      const id = await getData('user');
+  //     const id = await getData('user');
 
-      const response = await axios.post(`${BASE_URL}/api/getLeadLabel`, {
-        // project_id: 8,
-        user_id: 1,
-      });
-      //  console.log(response.data);
-      //  console.log(response.data.status_code);
-      if (response.data.status_code === '200') {
-        setlabellist(response.data.client);
-        //  console.log('labellist', labellist);
-      } else {
-        //navigation.goBack();
-        throw new Error('Invalid user id label list ');
-      }
-      // setLoad(false);
-    } catch (error) {
-      //setLoad(false);
-      //navigation.goBack();
-      Snackbar.show({
-        text:
-          error.message ||
-          'Failed to get the Policy plan data. Please try again.',
-        textColor: 'white',
-        backgroundColor: 'red',
-        duration: Snackbar.LENGTH_SHORT,
-        marginBottom: 70,
-      });
-      //  console.error('Error:', error.message);
-      // console.error('Error fetching data:', error);
-      // setError(error);
-    } finally {
-      setLoad(false);
-    }
-  };
+  //     const response = await axios.post(`${BASE_URL}/api/getLeadLabel`, {
+  //       // project_id: 8,
+  //       user_id: 1,
+  //     });
+  //     //  console.log(response.data);
+  //     //  console.log(response.data.status_code);
+  //     if (response.data.status_code === '200') {
+  //       setlabellist(response.data.client);
+  //       //  console.log('labellist', labellist);
+  //     } else {
+  //       //navigation.goBack();
+  //       throw new Error('Invalid user id label list ');
+  //     }
+  //     // setLoad(false);
+  //   } catch (error) {
+  //     //setLoad(false);
+  //     //navigation.goBack();
+  //     Snackbar.show({
+  //       text:
+  //         error.message ||
+  //         'Failed to get the Policy plan data. Please try again.',
+  //       textColor: 'white',
+  //       backgroundColor: 'red',
+  //       duration: Snackbar.LENGTH_SHORT,
+  //       marginBottom: 70,
+  //     });
+  //     //  console.error('Error:', error.message);
+  //     // console.error('Error fetching data:', error);
+  //     // setError(error);
+  //   } finally {
+  //     setLoad(false);
+  //   }
+  // };
   const fetchLeadStatus = async () => {
     try {
       setLoad(true);
@@ -308,7 +312,7 @@ const Leadsdata = ({navigation}) => {
 
       const response = await axios.post(`${BASE_URL}/api/getLeadStatus`, {
         // project_id: 8,
-        user_id: 1,
+        user_id: id,
       });
       // console.log(response.data);
       // console.log(response.data.status);
@@ -353,31 +357,53 @@ const Leadsdata = ({navigation}) => {
       console.log('projectid', projectid);
       const body = {
         user_id: id,
-        id: userData?.id,
+        id: userData.id,
         project_id: projectid,
         first_name: firstName,
         last_name: lastName,
         phone: contact,
         email: email,
-        address: '306, Dwarka New Delhi',
-        follow_up_time: datetext,
-        visit_time: timetext,
-        remark: notes,
+        address: address,
+
+        remark: remark,
         city: 'New Delhi',
         state: 'Delhi',
         zip: '110075',
         country: 'india',
         lead_status_id: value4,
-        labels: value3,
+        // labels: '1',
         insurer: value,
-        policy_plan: value1,
+        plan_name: value1,
 
         payment_term: value2,
         is_lead: userData.is_lead,
       };
+      // const body = {
+      //   user_id: id,
+      //   id: userData.id.toString(),
+      //   project_id: '8',
+      //   first_name: 'naaz',
+      //   last_name: null,
+      //   phone: '333333333',
+      //   email: 'Sujit@techiedom.com',
+      //   address: ' Delhi',
+      //   follow_up_time: '',
+      //   visit_time: '',
+      //   remark: 'Interested',
+      //   city: 'New Delhi',
+      //   state: 'Delhi',
+      //   zip: '110075',
+      //   country: 'india',
+      //   lead_status_id: '2',
+      //   labels: '1',
+      //   insurer: '4',
+      //   plan_name: '3',
+      //   payment_term: '1',
+      //   is_lead: 1,
+      // };
       console.log('body', body);
       const response = await axios.post(`${BASE_URL}/api/updateLead`, body);
-      // console.log('fetch data', response);
+      //console.log('fetch data', response);
       if (response.status === 200) {
         Snackbar.show({
           text: 'Updated Successfully',
@@ -387,19 +413,6 @@ const Leadsdata = ({navigation}) => {
           duration: Snackbar.LENGTH_SHORT,
           //marginBottom: 70,
         });
-        // Assuming your API returns data in the response.data property
-        //  const userData = response.data.client;
-        // // await storeData('id', userData.id);
-        // setEmail(userData?.email);
-        // setFirstName(userData?.first_name);
-        // setLastName(userData?.last_name);
-        // setContact(userData?.phone);
-        // setAddress(userData?.address);
-        // setLastName(userData?.last_name);
-        // setEmail(userData?.email);
-        // setAddress(userData?.address);
-        //setuserData(userData); // Set user state after updating other states
-        //  navigation.goBack();
       } else {
         //navigation.goBack();
         throw new Error('Invalid project id during update');
@@ -435,17 +448,35 @@ const Leadsdata = ({navigation}) => {
     label: item.title,
     value: item.id.toString(),
   }));
-  const data3 = labellist?.map(item => ({
-    label: item.title,
-    value: item.id.toString(),
-  }));
+  // const data3 = labellist?.map(item => ({
+  //   label: item.title,
+  //   value: item.id.toString(),
+  // }));
   const data4 = leadstatus?.map(item => ({
     label: item.title,
     value: item.id.toString(),
   }));
+  // console.log('data4', data4);
 
   // Add seconds as a dependency
-
+  const handlenext = () => {
+    setAddress(null);
+    setContact(null);
+    setDatetext('DD-MM-YYYY');
+    setTimetext('HH:MM');
+    setEmail(null);
+    setFirstName(null);
+    setLastName(null);
+    setNotes(null);
+    setValue(null);
+    setValue1(null);
+    setValue2(null);
+    setValue3(null);
+    setValue4(null);
+    setuserData(null);
+    setRemark(null);
+    fetchData();
+  };
   const openModal = () => {
     setModalVisible(true);
   };
@@ -456,9 +487,71 @@ const Leadsdata = ({navigation}) => {
 
   const handleSave = () => {
     // Implement your logic here to handle the input data
-
+    //handleAddevent();
     // Close the modal
     closeModal();
+  };
+  const handleAddevent = async () => {
+    try {
+      setLoad(true);
+      // const datamail = await getData('usermail');
+      // const datapass = await getData('userpass');
+      if (
+        //eventtype == null ||
+        datetext == 'DD-MM-YYYY' ||
+        timetext == 'HH:MM' ||
+        notes == null ||
+        notes == ''
+        //  reminder == null
+      ) {
+        throw new Error('Please fill  all the  required fields ');
+      }
+      const id = await getData('user');
+      const projectid = await getData('projectid');
+      console.log('projectid', projectid);
+      const body = {
+        user_id: id,
+        event_type: 'followup',
+        date: datetext,
+        time: timetext,
+        remark: notes,
+        reminder: '1',
+      };
+      console.log('body', body);
+      const response = await axios.post(`${BASE_URL}/api/addEvent`, body);
+      console.log('fetch data', response.data);
+      if (response.data.status === 200) {
+        //handleSave()
+        Snackbar.show({
+          text: 'Event Added Successfully',
+          textColor: 'white',
+          backgroundColor: '#3aba40',
+          duration: Snackbar.LENGTH_SHORT,
+          // marginBottom: 70,
+        });
+        handleSave();
+        // navigation.goBack();
+      } else {
+        //navigation.goBack();
+        throw new Error('Invalid user  during Event');
+      }
+    } catch (error) {
+      //setLoad(false);
+      // navigation.goBack();
+      Snackbar.show({
+        text:
+          error.message || 'Failed to add the Event data. Please try again.',
+        textColor: 'white',
+        backgroundColor: 'red',
+        duration: Snackbar.LENGTH_SHORT,
+        // marginBottom: 70,
+      });
+      //  console.error('Error:', error.message);
+      //  console.error('Error fetching data:', error);
+      // setError(error);
+    } finally {
+      setLoad(false);
+    }
   };
   if (load) {
     return <Loading />;
@@ -495,7 +588,7 @@ const Leadsdata = ({navigation}) => {
         </View>
         <View style={{flexDirection: 'row', gap: 10}}>
           <TouchableOpacity
-            onPress={fetchData}
+            onPress={handlenext}
             style={{
               backgroundColor: '#3aba40',
               paddingHorizontal: 10,
@@ -637,7 +730,7 @@ const Leadsdata = ({navigation}) => {
                 </Text>
                 <Text
                   style={{fontSize: 17, fontWeight: 'bold', color: 'black'}}>
-                  SAG1095
+                  {userData?.app_no == null ? 'NULL' : userData?.app_no}
                 </Text>
               </View>
             </View>
@@ -663,7 +756,7 @@ const Leadsdata = ({navigation}) => {
                 <Text style={{color: 'gray', fontSize: 13}}>Case Code</Text>
                 <Text
                   style={{fontSize: 17, fontWeight: 'bold', color: 'black'}}>
-                  8596
+                  {userData?.case_code == null ? 'NULL' : userData?.case_code}
                 </Text>
               </View>
             </View>
@@ -851,8 +944,10 @@ const Leadsdata = ({navigation}) => {
                     placeholder="Insurer Name"
                     searchPlaceholder="Search..."
                     value={value}
-                    selectedTextStyle={{color: 'black'}}
+                    selectedTextStyle={{color: 'black', fontSize: 14}}
                     onChange={item => {
+                      fetchPolicyplans(item.value);
+                      //console.log(item);
                       setValue(item.value);
                     }}
                     itemTextStyle={{color: 'black'}}
@@ -884,7 +979,7 @@ const Leadsdata = ({navigation}) => {
                     }}
                     data={data1}
                     search
-                    selectedTextStyle={{color: 'black'}}
+                    selectedTextStyle={{color: 'black', fontSize: 14}}
                     itemTextStyle={{color: 'black'}}
                     // maxHeight={300}
                     labelField="label"
@@ -919,7 +1014,7 @@ const Leadsdata = ({navigation}) => {
                   //    mode="modal"
                   style={{flex: 1, marginHorizontal: 5}}
                   placeholderStyle={{color: 'gray', fontSize: 14}}
-                  selectedTextStyle={{color: 'black'}}
+                  selectedTextStyle={{color: 'black', fontSize: 14}}
                   // inputSearchStyle={styles.inputSearchStyle}
                   //iconStyle={styles.iconStyle}
                   data={data2}
@@ -960,7 +1055,7 @@ const Leadsdata = ({navigation}) => {
                     color: 'gray',
                     fontSize: 14,
                   }}
-                  selectedTextStyle={{color: 'black'}}
+                  selectedTextStyle={{color: 'black', fontSize: 14}}
                   // inputSearchStyle={styles.inputSearchStyle}
                   //iconStyle={styles.iconStyle}
                   data={data4}
@@ -973,12 +1068,17 @@ const Leadsdata = ({navigation}) => {
                   searchPlaceholder="Search..."
                   value={value4}
                   onChange={item => {
-                    setValue4(item.value);
+                    if (item.label === 'Followup') {
+                      openModal();
+                      setValue4(item.value);
+                    }
+                    //console.log('item', item);
+                    else setValue4(item.value);
                   }}
                 />
               </View>
             </View>
-            <View
+            {/* <View
               style={{
                 //flex: 1,
                 borderWidth: 1,
@@ -988,7 +1088,7 @@ const Leadsdata = ({navigation}) => {
                 paddingHorizontal: 7,
                 paddingVertical: 3,
               }}>
-              {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> */}
+              {/* <Text style={{marginHorizontal: 4}}>Insurer Name</Text> 
               <View
                 style={{
                   flexDirection: 'row',
@@ -1018,8 +1118,35 @@ const Leadsdata = ({navigation}) => {
                   }}
                 />
               </View>
-            </View>
+            </View> */}
+            <View
+              style={{
+                backgroundColor: '#FFFFFF', // Set the background color to white
+                borderRadius: 8,
+                marginHorizontal: 8,
+                marginTop: 8,
+              }}>
+              <TextInput
+                style={{
+                  width: '100%',
+                  height: 100,
 
+                  borderColor: 'gray', // Set the border color (you can customize)
+                  borderWidth: 1,
+                  borderRadius: 7,
+                  //padding: 10,
+                  fontSize: 14,
+                  color: 'black', // Set the text color (you can customize)
+                  paddingHorizontal: 10,
+                }}
+                multiline
+                textAlignVertical="top"
+                placeholder="Add Remarks"
+                placeholderTextColor="gray" // You can customize the placeholder text color
+                value={remark}
+                onChangeText={setRemark}
+              />
+            </View>
             <TouchableOpacity
               onPress={handleUpdate}
               style={{
@@ -1198,7 +1325,7 @@ const Leadsdata = ({navigation}) => {
                 gap: 10,
               }}>
               <TouchableOpacity
-                onPress={handleSave}
+                onPress={handleAddevent}
                 style={{
                   paddingHorizontal: 15,
                   paddingVertical: 5,

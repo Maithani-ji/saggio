@@ -1,10 +1,18 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import call from 'react-native-phone-call';
 import {useNavigation} from '@react-navigation/native';
 
-const ActiveLeadsData = ({index, data}) => {
-  // console.log('data', data);
+const ActiveLeadsData = ({index, data, data4}) => {
+  console.log('data', data);
   const navigation = useNavigation();
   const handleCallPress = () => {
     const args = {
@@ -46,7 +54,7 @@ const ActiveLeadsData = ({index, data}) => {
             //marginTop: 8,
           }}>
           <Image
-            source={require('../assets/user.png')}
+            source={require('../assets/user-icon.png')}
             style={{
               width: 40,
               height: 40,
@@ -112,6 +120,27 @@ const ActiveLeadsData = ({index, data}) => {
                     data?.country}
                 </Text>
               </View>
+              {data4[data?.labels - 1]?.label && (
+                <View
+                  style={{
+                    //borderRadius: 6,
+                    backgroundColor: data4[data?.labels - 1]?.color,
+                    //backgroundColor: 'orange',
+                    alignSelf: 'flex-start',
+                    paddingHorizontal: 15,
+                    paddingVertical: 5,
+                    borderRadius: 7,
+                    //borderTopLeftRadius: 15,
+                    //borderBottomLeftRadius: 15,
+                    //borderTopRightRadius: 15,
+
+                    marginTop: 10,
+                  }}>
+                  <Text style={{color: 'white'}}>
+                    {data4[data?.labels - 1]?.label}
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
         </View>
@@ -124,6 +153,52 @@ const ActiveLeadsData = ({index, data}) => {
             justifyContent: 'flex-end',
             marginRight: 7,
           }}>
+          <TouchableOpacity
+            onPress={() => {
+              // Specify the latitude and longitude of the location you want to navigate to
+              const latitude = 37.7749;
+              const longitude = -122.4194;
+
+              // Create a URL with the specified latitude and longitude
+              // const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+              //const url = `https://www.google.com/maps/`;
+              const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                data.city,
+              )}`;
+              // Open the URL using the Linking module
+              Linking.openURL(url)
+                .then(supported => {
+                  if (!supported) {
+                    Alert.alert(
+                      'Opening Google Maps is not supported on this device',
+                    );
+                  } else {
+                    console.log('Google Maps opened successfully');
+                  }
+                })
+                .catch(error =>
+                  Alert.alert('Error opening Google Maps:', error),
+                );
+            }}>
+            {/* <View
+              style={{
+                borderWidth: 1,
+                borderRadius: 400,
+                borderColor: '#0bbc63',
+                backgroundColor: '#0bbc63',
+                padding: 5,
+              }}> */}
+            <Image
+              source={require('../assets/location.png')}
+              style={{
+                width: 30,
+                height: 30,
+                marginTop: -1,
+                //   tintColor: 'white',
+              }}
+            />
+            {/* </View> */}
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleCallPress}>
             <View
               style={{
@@ -143,7 +218,8 @@ const ActiveLeadsData = ({index, data}) => {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Edit Lead')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Edit Lead', {leaddata: data})}>
             <View
               style={{
                 borderWidth: 1,
@@ -163,7 +239,13 @@ const ActiveLeadsData = ({index, data}) => {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Remark List')}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Remark List', {
+                leaddata: data,
+                // infodata: data,
+              })
+            }>
             <View
               style={{
                 borderWidth: 1,

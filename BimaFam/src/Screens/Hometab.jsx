@@ -50,7 +50,7 @@ const Home = () => {
         console.log(id);
 
         const response = await axios.post(`${BASE_URL}/api/getDashboard`, {
-          user_id: 2,
+          user_id: id,
         });
         if (response.data.status === 200) {
           console.log(response.data.data);

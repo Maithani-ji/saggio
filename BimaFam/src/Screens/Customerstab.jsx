@@ -25,13 +25,13 @@ const Customers = ({navigation}) => {
   };
 
   useEffect(() => {
-    // const unsubscribe = navigation.addListener('focus', () => {
-    // Reset data when page is focused
-    fetchData(); // Fetch data when page is focused
-    //   });
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Reset data when page is focused
+      fetchData(); // Fetch data when page is focused
+    });
 
     // Cleanup the event listener
-    //  return unsubscribe;
+    return unsubscribe;
   }, [navigation, fetchData]); // Empty dependency array ensures this effect runs once when component mounts
 
   const fetchData = async () => {
@@ -41,7 +41,7 @@ const Customers = ({navigation}) => {
       const id = await getData('user');
 
       const response = await axios.post(`${BASE_URL}/api/getCustomerList`, {
-        user_id: 2,
+        user_id: id,
       });
       console.log(response.data);
       if (response.data.status === 200) {

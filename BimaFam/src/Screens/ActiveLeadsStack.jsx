@@ -51,7 +51,7 @@ const ActiveLeads = ({navigation}) => {
       const id = await getData('user');
       //console.log(datamail, datapass);
       const response = await axios.post(`${BASE_URL}/api/getLeadList`, {
-        user_id: 2,
+        user_id: id,
       });
       console.log(response.data);
       if (response.data.status === 200) {
@@ -100,7 +100,7 @@ const ActiveLeads = ({navigation}) => {
 
       const response = await axios.post(`${BASE_URL}/api/getLeadStatus`, {
         // project_id: 8,
-        user_id: 1,
+        user_id: id,
       });
       // console.log(response.data);
       // console.log(response.data.status);
@@ -134,6 +134,7 @@ const ActiveLeads = ({navigation}) => {
   const data4 = leadstatus?.map(item => ({
     label: item.title,
     value: item.id.toString(),
+    color: item.color.toString(),
   }));
   const handlefromDateChange = (event, selectedDate) => {
     setshow(false);
@@ -358,7 +359,12 @@ const ActiveLeads = ({navigation}) => {
           }}>
           {lead &&
             lead?.map((item, index) => (
-              <ActiveLeadsData key={index} index={index} data={item} />
+              <ActiveLeadsData
+                key={index}
+                index={index}
+                data={item}
+                data4={data4}
+              />
             ))}
         </View>
       </ScrollView>

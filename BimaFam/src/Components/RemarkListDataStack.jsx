@@ -2,9 +2,9 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-const RemarkListData = ({index}) => {
+const RemarkListData = ({index, item, info}) => {
   const navigation = useNavigation();
-
+  console.log('remark data', item);
   return (
     <View>
       <View
@@ -81,7 +81,7 @@ const RemarkListData = ({index}) => {
                     color: 'gray',
                     textAlignVertical: 'center',
                   }}>
-                  Lorem ipsum dolor sit amet Lorem
+                  {item?.remark}
                 </Text>
               </View>
 
@@ -107,7 +107,10 @@ const RemarkListData = ({index}) => {
             marginTop: -8,
             justifyContent: 'flex-end',
           }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Add Remark')}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Add Remark', {leaddata: item, edit: true})
+            }>
             <Image
               source={require('../assets/Editremark.png')}
               style={{

@@ -9,52 +9,118 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
 import Loading from '../loadingcomponent/loading';
 import {getData} from '../utils/AsyncStorag';
-const AddRemark = ({navigation}) => {
-  const [followbtn, setfollowbtn] = useState(false);
-  const [meetingbtn, setmeetingbtn] = useState(false);
-  const [date, setdate] = useState(new Date());
-  const [mode, setmode] = useState('');
-  const [show, setshow] = useState(false);
-  const [datetext, setdatetext] = useState('DD-MM-YYYY');
-  const [timetext, settimetext] = useState('HH:MM');
+import {BASE_URL} from '../utils/constant';
+const AddRemark = ({navigation, route}) => {
+  const {leaddata, edit} = route?.params;
+  const [leadid, setleadid] = useState(null);
+  useEffect(() => {
+    if (leaddata && leaddata.remark) {
+      setRemark(leaddata.remark);
+      setleadid(leaddata.lead_id);
+      console.log('leadid', leadid);
+    } else if (leaddata) {
+      setleadid(leaddata.id);
+      console.log('leadid', leadid);
+    }
+    console.log('leadid', leadid);
+  }, []);
+  const [remark, setRemark] = useState(null);
+  const [load, setLoad] = useState(false);
+  // const onchange = (event, selectedDate) => {
+  //   setshow(false);
+  //   const currentDate = selectedDate || date;
+  //   //setshow(Platform.OS === 'android'); // Temporarily keep visible on Android
+  //   setdate(currentDate);
+  //   const tempDate = new Date(currentDate);
+  //   const fdate = `${tempDate.getDate()}-${
+  //     tempDate.getMonth() + 1
+  //   }-${tempDate.getFullYear()}`;
 
-  const onchange = (event, selectedDate) => {
-    setshow(false);
-    const currentDate = selectedDate || date;
-    //setshow(Platform.OS === 'android'); // Temporarily keep visible on Android
-    setdate(currentDate);
-    const tempDate = new Date(currentDate);
-    const fdate = `${tempDate.getDate()}-${
-      tempDate.getMonth() + 1
-    }-${tempDate.getFullYear()}`;
+  //   const ftime = `${tempDate.getHours()}:${tempDate.getMinutes()}`;
+  //   setdatetext(fdate);
+  //   settimetext(ftime);
+  // };
 
-    const ftime = `${tempDate.getHours()}:${tempDate.getMinutes()}`;
-    setdatetext(fdate);
-    settimetext(ftime);
-  };
-
-  const showMode = currentMode => {
-    setshow(!show);
-    setmode(currentMode);
-  };
-  const handlefollowbtnpress = () => {
-    setfollowbtn(!followbtn);
-  };
-  const handlemeetingbtnpress = () => {
-    setmeetingbtn(!meetingbtn);
-  };
+  // const showMode = currentMode => {
+  //   setshow(!show);
+  //   setmode(currentMode);
+  // };
+  // const handlefollowbtnpress = () => {
+  //   setfollowbtn(!followbtn);
+  // };
+  // const handlemeetingbtnpress = () => {
+  //   setmeetingbtn(!meetingbtn);
+  // };
   const handleBackPress = () => {
     // Handle back button press (e.g., navigate back)
     navigation.goBack();
   };
+  const handleaddRemark = async () => {
+    try {
+      if (remark == null) {
+        throw new Error('Please add a remark first!!');
+      }
+      setLoad(true);
+      // const datamail = await getData('usermail');
+      // const datapass = await getData('userpass');
+      const id = await getData('user');
 
+      const response = await axios.post(`${BASE_URL}/api/addLeadRemark`, {
+        lead_id: leadid,
+        user_id: id,
+        remark: remark,
+      });
+      console.log('fetch data', response.data);
+      if (response.data.status === 200) {
+        Snackbar.show({
+          text: 'Remark Added Successfully',
+          textColor: 'white',
+          backgroundColor: '#3aba40',
+          duration: Snackbar.LENGTH_SHORT,
+          marginBottom: 70,
+        });
+        // navigation.navigate('Active Leads');
+        let data;
+        if (edit) {
+          data = {id: leadid};
+        }
+        setTimeout(() => {
+          navigation.replace('Remark List', {
+            leaddata: edit ? data : leaddata,
+          });
+        }, 500); //
+      } else {
+        //navigation.goBack();
+        throw new Error('Invalid project id');
+      }
+      // setLoad(false);
+    } catch (error) {
+      //setLoad(false);
+      //navigation.goBack();
+      Snackbar.show({
+        text: error.message || 'Failed to add the data. Please try again.',
+        textColor: 'white',
+        backgroundColor: 'red',
+        duration: Snackbar.LENGTH_SHORT,
+        marginBottom: 70,
+      });
+      //  console.error('Error:', error.message);
+      //  console.error('Error fetching data:', error);
+      // setError(error);
+    } finally {
+      setLoad(false);
+    }
+  };
+  if (load) {
+    return <Loading />;
+  }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#f4f6ff'}}>
       <View
@@ -77,7 +143,9 @@ const AddRemark = ({navigation}) => {
             }}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'black'}}>Add Remark</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>
+          {edit ? 'Remark' : 'Add Remark'}
+        </Text>
       </View>
       <View></View>
       <View style={{margin: 15, flex: 1}}>
@@ -108,6 +176,8 @@ const AddRemark = ({navigation}) => {
                 color: '#000000', // Set the text color (you can customize)
                 paddingHorizontal: 10,
               }}
+              value={remark}
+              onChangeText={setRemark}
               multiline
               textAlignVertical="top"
               placeholder="Note Here"
@@ -115,203 +185,7 @@ const AddRemark = ({navigation}) => {
             />
           </View>
         </View>
-        <View
-          style={{
-            backgroundColor: '#FFFFFF', // Set the background color to white
-            borderRadius: 15,
-            width: '100%',
-            //height: 150,
-          }}>
-          <View style={{margin: 15}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: 10,
-              }}>
-              <Text
-                style={{
-                  //marginHorizontal: 10,
-                  marginVertical: 5,
-                  fontWeight: '300',
-                  color: 'black',
-                }}>
-                Add Reminder
-              </Text>
-              <BouncyCheckbox
-                size={15}
-                fillColor="green"
-                unfillColor="#FFFFFF"
-                //text="Custom Checkbox"
-                iconStyle={{borderColor: 'green'}}
-                innerIconStyle={{borderWidth: 2, borderRadius: 1}}
-                textStyle={{fontFamily: 'JosefinSans-Regular'}}
-                onPress={isChecked => {}}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                gap: 3,
-              }}>
-              <TouchableOpacity
-                onPress={handlefollowbtnpress}
-                style={{
-                  width: '48%',
-                  //height: 20,
-                  borderColor: 'gray',
-                  backgroundColor: followbtn ? 'lightgray' : null,
-                  borderWidth: 0.8,
-                  borderRadius: 7,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: 3,
-                }}>
-                <Text
-                  style={{
-                    marginHorizontal: 10,
-                    marginVertical: 5,
-                    fontWeight: '200',
-                    color: 'black',
-                    textAlignVertical: 'center',
-                  }}>
-                  Follow Up
-                </Text>
-                <Image
-                  source={require('../assets/followup.png')} // Update with the actual path to your back button image
-                  style={{
-                    width: 23,
-                    height: 23,
-                    tintColor: '#104baf', // You can customize the color of the back button
-                    marginRight: 10,
-                  }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={handlemeetingbtnpress}
-                style={{
-                  width: '48%',
-                  //height: 20,
-                  borderColor: 'gray',
-                  backgroundColor: meetingbtn ? 'lightgray' : null,
-                  borderWidth: 0.8,
-                  borderRadius: 7,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: 3,
-                }}>
-                <Text
-                  style={{
-                    marginHorizontal: 10,
-                    marginVertical: 5,
-                    fontWeight: '200',
-                    color: 'black',
-                    textAlignVertical: 'center',
-                  }}>
-                  Meeting
-                </Text>
-                <Image
-                  source={require('../assets/meeting.png')} // Update with the actual path to your back button image
-                  style={{
-                    width: 23,
-                    height: 23,
-                    tintColor: '#104baf', // You can customize the color of the back button
-                    marginRight: 10,
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                gap: 3,
-                marginTop: 15,
-              }}>
-              <TouchableOpacity
-                onPress={() => showMode('date')}
-                style={{
-                  width: '48%',
-                  //height: 20,
-                  borderColor: 'gray',
-                  borderWidth: 0.8,
-                  borderRadius: 7,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: 3,
-                }}>
-                <Text
-                  style={{
-                    marginHorizontal: 10,
-                    marginVertical: 5,
-                    fontWeight: '200',
-                    color: 'black',
-                    textAlignVertical: 'center',
-                  }}>
-                  {datetext}
-                </Text>
-                <Image
-                  source={require('../assets/Scheduledevents.png')} // Update with the actual path to your back button image
-                  style={{
-                    width: 23,
-                    height: 23,
-                    tintColor: '#104baf', // You can customize the color of the back button
-                    marginRight: 10,
-                  }}
-                />
-                {show && (
-                  <DateTimePicker
-                    testID="datetimepicker"
-                    value={date}
-                    mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChange={onchange}
-                  />
-                )}
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => showMode('time')}
-                style={{
-                  width: '48%',
-                  //height: 20,
-                  borderColor: 'gray',
-                  borderWidth: 0.8,
-                  borderRadius: 7,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: 3,
-                }}>
-                {/* <View> */}
-                <Text
-                  style={{
-                    marginHorizontal: 10,
-                    marginVertical: 5,
-                    fontWeight: '200',
-                    color: 'black',
-                    textAlignVertical: 'center',
-                  }}>
-                  {timetext}
-                </Text>
-                <Image
-                  source={require('../assets/time.png')} // Update with the actual path to your back button image
-                  style={{
-                    width: 23,
-                    height: 23,
-                    tintColor: '#104baf', // You can customize the color of the back button
-                    marginRight: 10,
-                  }}
-                />
-                {/* </View> */}
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+
         <View></View>
         <View
           style={{
@@ -319,8 +193,34 @@ const AddRemark = ({navigation}) => {
             marginTop: '30%',
             //width: '30%',
           }}>
+          {/* {!edit && (
+            <TouchableOpacity
+              onPress={handleaddRemark}
+              style={{
+                //marginVertical: 10,
+                // flex: 1,
+                // height: '70%',
+                // width: '35%',
+
+                backgroundColor: 'red',
+                borderRadius: 10,
+                padding: 13,
+                paddingHorizontal: 40,
+              }}>
+              <Text
+                style={{
+                  //alignSelf: 'center',
+                  color: 'white',
+                  fontSize: 13,
+                  fontWeight: 'bold',
+                  //marginHorizontal: 10,
+                }}>
+                Save
+              </Text>
+            </TouchableOpacity>
+          )} */}
           <TouchableOpacity
-            onPress={() => navigation.navigate('Remark List')}
+            onPress={handleaddRemark}
             style={{
               //marginVertical: 10,
               // flex: 1,

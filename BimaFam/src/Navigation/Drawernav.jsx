@@ -34,7 +34,7 @@ const CustomDrawerContent = props => {
 const DrawerSlide = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Dashboard"
+      // initialRouteName="Dashboard"
       drawerContent={props => (
         <View style={{flex: 1}}>
           <View
