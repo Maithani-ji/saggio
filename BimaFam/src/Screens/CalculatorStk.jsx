@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  TextInput,
 } from 'react-native';
 import React, {useEffect, useMemo, useState} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -171,11 +172,7 @@ const Calculator = ({navigation}) => {
     {label: 'Yearly', value: 'yearly'},
     {label: 'Once', value: 'once'},
   ];
-  const data1 = [
-    {label: '₹1,00,000', value: '100000'},
-    {label: '₹2,00,000', value: '200000'},
-    {label: '₹3,00,000', value: '300000'},
-  ];
+
   // const data1 = [
   //   {label: '1 years', value: '1'},
   //   {label: '2 years', value: '2'},
@@ -404,7 +401,7 @@ const Calculator = ({navigation}) => {
   // ];
 
   const [value, setValue] = useState(null);
-  const [value1, setValue1] = useState(0);
+  const [value1, setValue1] = useState(null);
 
   const handlecalcbtn = async () => {
     try {
@@ -546,42 +543,61 @@ const Calculator = ({navigation}) => {
               />
             </View>
           </View>
-          <View>
+          <View
+            style={{
+              // flexDirection: 'row',
+              // justifyContent: 'space-between',
+              // padding: 10,
+              width: 150,
+              height: 30,
+              borderColor: 'black',
+              borderWidth: 0.5,
+              //marginBottom: -15,
+              borderRadius: 5,
+              backgroundColor: '#f4f6ff',
+              marginTop: 10,
+              marginRight: 10,
+            }}>
             <View
               style={{
-                // flexDirection: 'row',
-                // justifyContent: 'space-between',
-                padding: 10,
-                width: 160,
-                marginBottom: 5,
+                flexDirection: 'row',
               }}>
-              <Dropdown
+              <Text
+                style={{
+                  color: 'black',
+                  textAlignVertical: 'center',
+                  marginLeft: 5,
+                }}>
+                ₹
+              </Text>
+              <TextInput
                 //mode="modal"
                 style={{
-                  height: 30,
-                  //  width: '30%',
-                  borderColor: 'black',
-                  borderWidth: 0.5,
+                  // height: 30,
+                  width: '100%',
+                  // borderColor: 'black',
+                  //borderWidth: 0.5,
                   padding: 5,
-                  borderRadius: 5,
-                  backgroundColor: '#f4f6ff',
+                  color: 'black',
+                  fontSize: 14,
+                  // borderRadius: 5,
+                  //backgroundColor: '#f4f6ff',
                 }}
-                itemTextStyle={{fontSize: 14, color: 'black'}}
+                //itemTextStyle={{fontSize: 14, color: 'black'}}
                 placeholderStyle={{
                   color: 'gray',
                   fontSize: 14,
                 }}
-                selectedTextStyle={{color: 'black', fontSize: 14}}
-                data={data1}
-                search
-                labelField="label"
-                valueField="value"
-                placeholder="₹ 00000"
-                searchPlaceholder="Search..."
+                // selectedTextStyle={{color: 'black', fontSize: 14}}
+                //data={data1}
+                // search
+                //  labelField="label"
+                // valueField="value"
+                placeholder="00000"
+                //Placeholder="Search..."
                 value={value1}
-                onChange={item => {
-                  setValue1(item.value);
-                }}
+                keyboardType="number-pad"
+                onChangeText={setValue1}
               />
             </View>
           </View>
@@ -627,7 +643,7 @@ const Calculator = ({navigation}) => {
               minimumValue={5}
               maximumValue={30}
               //  lowerLimit={5}
-              // value={investfor}
+              value={investfor}
               minimumTrackTintColor="red"
               maximumTrackTintColor="red"
               step={1}
@@ -675,7 +691,7 @@ const Calculator = ({navigation}) => {
               minimumValue={5}
               maximumValue={30}
               // lowerLimit={5}
-              // value={investfor}
+              value={investedfor}
               minimumTrackTintColor="red"
               maximumTrackTintColor="red"
               step={1}
@@ -729,7 +745,7 @@ const Calculator = ({navigation}) => {
               minimumValue={0}
               maximumValue={30}
               //lowerLimit={0}
-              // value={investfor}
+              value={investedrate}
               minimumTrackTintColor="red"
               maximumTrackTintColor="red"
               step={0.5}
@@ -782,7 +798,7 @@ const Calculator = ({navigation}) => {
                   fontWeight: 'bold',
                   textAlign: 'center',
                 }}>
-                ₹ {value1}
+                ₹ {value1 == null || value1 == '' ? '0' : value1}
               </Text>
               <Text
                 style={{
@@ -837,7 +853,7 @@ const Calculator = ({navigation}) => {
                   fontSize: 13,
                   textAlign: 'center',
                 }}>
-                After {investedfor} years @ {investedrate}% p.a
+                After {investedfor} year @ {investedrate}% p.a
               </Text>
             </View>
           </View>
